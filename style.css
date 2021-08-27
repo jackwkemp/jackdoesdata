@@ -2,6 +2,7 @@ body {
    margin: 0px;
    padding:0px;
    background-color: rgb(245, 245 245);
+   /* background-color: grey; */
 
 }
 
@@ -21,27 +22,16 @@ a {
 
 }
 
-#particles-js {
-  background-color: rgb(245, 245 245);
-  /* background-color: grey; */
-
-
-
-
-}
-
-/* .jack-kemp { */
-/* background-color: rgb(236, 226, 200); */
-
-}
 
 .about {
 background-color: rgb(236, 226, 224);
 
+
+
 }
 
 .portfolio {
-/* background-color: rgb(236, 226, 200); */
+
 
 }
 
@@ -79,6 +69,12 @@ font-size: 72px;
 padding-top: 5%;
 font-family: Helvetica Neue;
 color: rgb(40, 40, 40);
+/* position: absolute; */
+
+}
+
+.jack-kemp {
+position: absolute;
 
 }
 
@@ -87,4 +83,12 @@ margin-left: 22%;
 font-family: Helvetica Neue;
 color: rgb(40, 40, 40);
 
+}
+
+#particles-js {
+  /* background-color: rgb(245, 245 245); */
+  /* background-color: grey; */
+/* display: flex; */
+/* justify-content: center;
+align-items: center; */
 }
