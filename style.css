@@ -1,10 +1,21 @@
+html {
+  scroll-behavior: smooth;
+  margin:0;
+  padding:0;
+  overflow-x:hidden;
+}
+
 body {
    margin: 0px;
    padding:0px;
    background-color: rgb(245, 245 245);
+   overflow-x:hidden;
    /* background-color: grey; */
 
 }
+
+
+
 
 .navbar {
   /* background-color: pink; */
@@ -48,19 +59,36 @@ a {
 
 .about {
 background-color: rgb(236, 226, 224);
+margin-top: -52px;
+z-index: 1;
+}
 
-
+.timeline {
+min-width: 1400px;
 
 }
 
+@media screen and (max-width: 1100px) {
+  div.timeline {
+    display: none;
+  }
+}
+
+/* @media screen and (max-width: 1320px) {
+  div.timeline {
+    display: none;
+  }
+} */
+
+
 .portfolio {
-
-
+/* background-color: pink; */
+margin-top: -48px;
 }
 
 .contact {
 background-color: rgb(236, 226, 224);
-
+margin-top: -48px;
 }
 
 .fa {
@@ -95,6 +123,7 @@ font-family: Helvetica Neue;
 color: rgb(40, 40, 40);
 /* position: absolute; */
 
+
 }
 
 .jack-kemp {
@@ -104,15 +133,48 @@ position: absolute;
 
 p {
 margin-left: 22%;
+margin-right: 10%;
 font-family: Helvetica Neue;
 color: rgb(40, 40, 40);
 
+
 }
+
+ul {
+margin-left: 10%;
+font-family: Helvetica Neue;
+color: rgb(40, 40, 40);
+
+
+}
+
 
 .welcome {
 position: absolute;
 margin-top: 260px;
+/* margin-bottom: 260px; */
 
+}
+
+#job ul{
+  list-style: none;
+}
+#job li{
+  display: inline;
+}
+
+#dots ul{
+  list-style: none;
+}
+#dots li{
+  display: inline;
+}
+
+#company ul{
+  list-style: none;
+}
+#company li{
+  display: inline;
 }
 
 #particles-js {
@@ -121,4 +183,6 @@ margin-top: 260px;
 /* display: flex; */
 /* justify-content: center;
 align-items: center; */
+min-height: 400px;
+height: auto;
 }
