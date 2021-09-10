@@ -85,7 +85,7 @@ a {
 
 .about {
 background-color: rgb(236, 226, 224);
-margin-top: -52px;
+margin-top: -165px;
 z-index: 1;
 }
 
@@ -111,7 +111,7 @@ white-space: nowrap;
 
 .portfolio {
 /* background-color: pink; */
-margin-top: -10px;
+margin-top: -50px;
 }
 
 .contact {
