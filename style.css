@@ -50,7 +50,7 @@ and (min-width : 500px)
 and (max-width : 800px) {
 
    .navbar {
-    font-size: 20px;
+    font-size: 25px;
     margin-top: 1%;
    }
 
@@ -181,6 +181,16 @@ position: absolute;
 
 }
 
+@media only screen
+and (min-width : 300px)
+and (max-width : 500px) {
+
+   .jack-kemp {
+    margin-top: 180px;
+   }
+
+}
+
 p {
 margin-left: 22%;
 margin-right: 10%;
@@ -208,7 +218,7 @@ and (min-width : 300px)
 and (max-width : 500px) {
 
    .welcome {
-    margin-top: 120px;
+    margin-top: 220px;
    }
 
 }
