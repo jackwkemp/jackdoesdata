@@ -33,6 +33,28 @@ body {
 
 }
 
+
+@media only screen
+and (min-width : 300px)
+and (max-width : 500px) {
+
+   .navbar {
+    font-size: 10px;
+   }
+
+}
+
+    @media only screen
+    and (min-width : 500px)
+    and (max-width : 800px) {
+
+       .navbar {
+        font-size: 20px;
+       }
+
+    }
+
+
 .nav-home {
 
 }
@@ -59,7 +81,6 @@ a {
 
 }
 
-
 .about {
 background-color: rgb(236, 226, 224);
 margin-top: -52px;
@@ -67,15 +88,17 @@ z-index: 1;
 }
 
 .timeline {
-min-width: 1400px;
-
+/* min-width: 1400px; */
+/* background-color: #333; */
+overflow: auto;
+white-space: nowrap;
 }
 
-@media screen and (max-width: 1100px) {
+/* @media screen and (max-width: 800px) {
   div.timeline {
     display: none;
   }
-}
+} */
 
 /* @media screen and (max-width: 1320px) {
   div.timeline {
@@ -126,8 +149,28 @@ font-family: Helvetica Neue;
 color: rgb(40, 40, 40);
 /* position: absolute; */
 
+}
+
+@media only screen
+and (min-width : 300px)
+and (max-width : 500px) {
+
+   h1 {
+    font-size: 20px;
+   }
 
 }
+
+    @media only screen
+    and (min-width : 500px)
+    and (max-width : 800px) {
+
+       h1 {
+        font-size: 50px;
+       }
+
+    }
+
 
 .jack-kemp {
 position: absolute;
@@ -140,17 +183,14 @@ margin-right: 10%;
 font-family: Helvetica Neue;
 color: rgb(40, 40, 40);
 
-
 }
 
 ul {
-margin-left: 10%;
+margin-left: 16%;
 font-family: Helvetica Neue;
 color: rgb(40, 40, 40);
 
-
 }
-
 
 .welcome {
 position: absolute;
@@ -179,6 +219,13 @@ margin-top: 260px;
 #company li{
   display: inline;
 }
+
+
+li {
+  display: inline-block;
+
+}
+
 
 #particles-js {
   /* background-color: rgb(245, 245 245); */
