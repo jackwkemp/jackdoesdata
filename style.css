@@ -39,7 +39,7 @@ and (min-width : 300px)
 and (max-width : 500px) {
 
    .navbar {
-    font-size: 10px;
+    font-size: 15px;
     margin-top: 1%;
    }
 
@@ -200,6 +200,16 @@ color: rgb(40, 40, 40);
 position: absolute;
 margin-top: 260px;
 /* margin-bottom: 260px; */
+
+}
+
+@media only screen
+and (min-width : 300px)
+and (max-width : 500px) {
+
+   .welcome {
+    margin-top: 120px;
+   }
 
 }
 
