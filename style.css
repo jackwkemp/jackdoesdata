@@ -111,7 +111,7 @@ white-space: nowrap;
 
 .portfolio {
 /* background-color: pink; */
-margin-top: -48px;
+margin-top: -10px;
 }
 
 .contact {
@@ -186,7 +186,7 @@ and (min-width : 300px)
 and (max-width : 500px) {
 
    .jack-kemp {
-    margin-top: 180px;
+    margin-top: 100px;
    }
 
 }
