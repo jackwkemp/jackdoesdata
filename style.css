@@ -168,8 +168,8 @@ h2 {
   color: rgb(40, 40, 40);
   /* text-align: center; */
   font-size: 150%;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 22%;
+  /* margin-right: 10px; */
 
 }
 
@@ -177,7 +177,7 @@ h3 {
   font-family: Helvetica Neue;
   color: rgb(40, 40, 40);
   font-size: 90%;
-  margin-left: 10px;
+  margin-left: 22%;
   /* font-weight: lighter; */
 
 }
@@ -287,15 +287,23 @@ height: auto;
 .column {
   /* margin-left: 16%; */
   float: left;
-  width: 33.33%;
-  /* width: 15%; */
-  padding: 10px;
+  /* width: 33.33%; */
+  width: 100%;
+  /* padding: 10px; */
   height: 300px; /* Should be removed. Only for demonstration */
-  border-style: solid;
-  border-color: rgb(245, 245, 245);
-  border-width: 5px;
+  /* border-style: solid; */
+  /* border-color: rgb(245, 245, 245); */
+  /* border-width: 5px; */
   position: relative;
-  background-color: lightgrey;
+  background-color: rgb(245, 245, 245);
+  /* background-color: lightgrey; */
+  /* margin-left: 22%; */
+  /* margin-right: 10%; */
+
+}
+
+hr{
+margin-left: 22%;
 
 }
 
@@ -305,6 +313,7 @@ height: auto;
   content: "";
   display: table;
   clear: both;
+
 }
 
 /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
@@ -319,6 +328,7 @@ height: auto;
   cursor: pointer;
   position: relative;
   top: 50%;
+  margin-left: 22%;
 }
 
 
@@ -327,7 +337,7 @@ height: auto;
   border-radius: 5px;
   cursor: pointer;
   transition: 0.3s;
-  position: absolute; right: 0; bottom: 0;
+  position: absolute; left: 40%; bottom: 9%;
   width:100%;
   max-width:100px;
 }
