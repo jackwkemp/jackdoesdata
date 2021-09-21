@@ -11,7 +11,10 @@ body {
    background-color: rgb(245, 245, 245);
    /* overflow-x:hidden; */
    /* background-color: grey; */
+}
 
+* {
+  box-sizing: border-box;
 }
 
 .wrapper{
@@ -21,16 +24,13 @@ body {
 
 
 .navbar {
-  /* background-color: pink; */
   font-size: 30px;
   margin-left: 22%;
   margin-top: 1%;
   font-family: Helvetica Neue;
   color: rgb(40, 40, 40);
-  /* display: inline; */
   min-width: 800px;
   position: absolute;
-
 }
 
 
@@ -56,37 +56,18 @@ and (max-width : 800px) {
 
 }
 
-
-.nav-home {
-
-}
-
-.nav-about {
+.nav-about, .nav-portfolio, .nav-contact {
 margin-left: 20px;
-
-}
-
-.nav-portfolio {
-margin-left: 20px;
-
-}
-
-.nav-contact {
-margin-left: 20px;
-
 }
 
 a {
   text-decoration: none;
   color: rgb(40, 40, 40);
-
-
 }
 
 .about {
 background-color: rgb(236, 226, 224);
-margin-top: -165px;
-margin-bottom: 50px;
+margin-top: -50px;
 z-index: 1;
 }
 
@@ -104,32 +85,21 @@ margin-top: -50px;
 
 .contact {
 background-color: rgb(236, 226, 224);
-margin-top: -48px;
+margin-top: -50px;
 }
 
 .fa {
-  /* padding: 10px; */
   font-size: 40px;
   width: 30px;
-  /* text-align: center; */
   text-decoration: none;
-  /* margin: 5px 2px; */
   border-radius: 50%;
   margin-left: 22%;
-  /* background-color: grey; */
 }
 
-.fa:hover {
-  opacity: 0.7;
-}
-
-.fa-github {
+.fa-github, .fa-linkedin {
   color: rgb(5, 5, 5);
 }
 
-.fa-linkedin {
-  color: rgb(5, 5, 5);
-}
 
 h1 {
 margin-left: 22%;
@@ -138,7 +108,6 @@ padding-top: 5%;
 font-family: Helvetica Neue;
 color: rgb(40, 40, 40);
 /* position: absolute; */
-
 }
 
 @media only screen
@@ -170,7 +139,6 @@ h2 {
   font-size: 150%;
   margin-left: 22%;
   /* margin-right: 10px; */
-
 }
 
 h3 {
@@ -179,24 +147,7 @@ h3 {
   font-size: 90%;
   margin-left: 22%;
   /* font-weight: lighter; */
-
 }
-
-
-.jack-kemp {
-position: absolute;
-
-}
-
-/* @media only screen
-and (min-width : 300px)
-and (max-width : 500px) {
-
-   .jack-kemp {
-    margin-top: 100px;
-   }
-
-} */
 
 p {
 margin-left: 22%;
@@ -207,120 +158,25 @@ color: rgb(40, 40, 40);
 }
 
 ul {
-margin-left: 16%;
+margin-left: 19%;
 font-family: Helvetica Neue;
 color: rgb(40, 40, 40);
 
 }
 
-.welcome {
-position: absolute;
-margin-top: 260px;
-/* margin-bottom: 260px; */
-
-}
-
-@media only screen
-and (min-width : 300px)
-and (max-width : 500px) {
-
-   .welcome {
-    margin-top: 180px;
-   }
-
-}
-
-@media only screen
-and (min-width : 500px)
-and (max-width : 800px) {
-
-   .welcome {
-    margin-top: 180px;
-   }
-
-}
-
-#job ul{
+#job, #dots, #company ul{
   list-style: none;
 }
-#job li{
+#job #dots, #company li{
   display: inline;
 }
-
-#dots ul{
-  list-style: none;
-}
-#dots li{
-  display: inline;
-}
-
-#company ul{
-  list-style: none;
-}
-#company li{
-  display: inline;
-}
-
 
 li {
   display: inline-block;
-
-}
-
-
-#particles-js {
-  /* background-color: rgb(245, 245 245); */
-  /* background-color: grey; */
-/* display: flex; */
-/* justify-content: center;
-align-items: center; */
-min-height: 1000px;
-height: auto;
-/* margin-bottom: -300px; */
-}
-
-* {
-  box-sizing: border-box;
-}
-
-  /* Create three equal columns that floats next to each other */
-.column {
-  /* margin-left: 16%; */
-  float: left;
-  /* width: 33.33%; */
-  width: 100%;
-  /* padding: 10px; */
-  height: 300px; /* Should be removed. Only for demonstration */
-  /* border-style: solid; */
-  /* border-color: rgb(245, 245, 245); */
-  /* border-width: 5px; */
-  position: relative;
-  background-color: rgb(245, 245, 245);
-  /* background-color: lightgrey; */
-  /* margin-left: 22%; */
-  /* margin-right: 10%; */
-
 }
 
 hr{
 margin-left: 22%;
-
-}
-
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-
-}
-
-/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 910px) {
-  .column {
-    width: 100%;
-  }
 }
 
 /* "About" button only at the moment */
@@ -331,23 +187,34 @@ margin-left: 22%;
   margin-left: 22%;
 }
 
-
 /* Project 1 Demo Gif */
-#myImgP1 {
+#myImgP1, #myImgP2, #myImgP3, #myImgP4 {
   border-radius: 5px;
   cursor: pointer;
   transition: 0.3s;
-  position: absolute; left: 40%; bottom: 9%;
+  margin-left: 22%;
+  /* position: absolute; left: 40%; bottom: 9%; */
   width:100%;
   max-width:100px;
 }
 
-#myImgP1:hover {
+iframe {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-left: 22%;
+  /* position: absolute; left: 40%; bottom: 9%; */
+  
+
+
+}
+
+#myImgP1:hover, #myImgP2:hover, #myImgP3:hover, #myImgP4:hover, .fa:hover {
     opacity: 0.7;
 }
 
 /* Project 1's Close Button */
-.closeP1 {
+.closeP1, .closeP2, .closeP3, .closeP4 {
     position: absolute;
     top: 15px;
     right: 35px;
@@ -357,132 +224,26 @@ margin-left: 22%;
     transition: 0.3s;
 }
 
-.closeP1:hover,
-.closeP1:focus {
+.closeP1:hover, .closeP1:focus, .closeP2:hover, .closeP2:focus,
+.closeP3:hover, .closeP3:focus, .closeP4:hover, .closeP4:focus {
     color: #bbb;
     text-decoration: none;
     cursor: pointer;
 }
 
-/* Project 2 Demo Gif */
-#myImgP2 {
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s;
-  position: absolute; right: 0; bottom: 0;
-  width:100%;
-  max-width:100px;
-}
 
-#myImgP2:hover {
-    opacity: 0.7;
-}
-
-/* Project 2's Close Button */
-.closeP2 {
-  position: absolute;
-  top: 15px;
-  right: 35px;
-  color: #f1f1f1;
-  font-size: 40px;
-  font-weight: bold;
-  transition: 0.3s;
-}
-
-.closeP2:hover,
-.closeP2:focus {
-  color: #bbb;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-/* Project 3 Demo Gif */
-#myImgP3 {
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s;
-  position: absolute; right: 0; bottom: 0;
-  width:100%;
-  max-width:100px;
-}
-
-#myImgP3:hover {
-    opacity: 0.7;
-}
-
-/* Project 3's Close Button */
-.closeP3 {
-  position: absolute;
-  top: 15px;
-  right: 35px;
-  color: #f1f1f1;
-  font-size: 40px;
-  font-weight: bold;
-  transition: 0.3s;
-}
-
-.closeP3:hover,
-.closeP3:focus {
-  color: #bbb;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-/* Project 4 Demo Gif */
-#myImgP4 {
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s;
-  position: absolute; right: 0; bottom: 0;
-  width:100%;
-  max-width:100px;
-}
-
-#myImgP3:hover {
-    opacity: 0.7;
-}
-
-/* Project 4's Close Button */
-.closeP4 {
-  position: absolute;
-  top: 15px;
-  right: 35px;
-  color: #f1f1f1;
-  font-size: 40px;
-  font-weight: bold;
-  transition: 0.3s;
-}
-
-.closeP4:hover,
-.closeP4:focus {
-  color: #bbb;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-
-/* Communal Modal (background) */
 .modal {
   display: none;
-  /* Hidden by default */
   position: fixed;
-  /* Stay in place */
   z-index: 1;
-  /* Sit on top */
   padding-top: 100px;
-  /* Location of the box */
   left: 0;
   top: 0;
   width: 100%;
-  /* Full width */
   height: 100%;
-  /* Full height */
   overflow: auto;
-  /* Enable scroll if needed */
   background-color: rgb(0, 0, 0);
-  /* Fallback color */
   background-color: rgba(0, 0, 0, 0.9);
-  /* Black w/ opacity */
 }
 
 /* Communal Modal Content (image) */
@@ -543,9 +304,7 @@ animation-duration: 0.6s;
 }
 
 
-
-
-.overlayP1 {
+.overlayP1, .overlayP2, .overlayP3, .overlayP4 {
   height: 100%;
   width: 0;
   position: fixed;
@@ -558,7 +317,7 @@ animation-duration: 0.6s;
   transition: 0.5s;
 }
 
-.overlayP1-content {
+.overlayP1-content, .overlayP2-content, .overlayP3-content, .overlayP4-content {
   position: relative;
   top: 25%;
   width: 100%;
@@ -566,7 +325,7 @@ animation-duration: 0.6s;
   margin-top: 30px;
 }
 
-.overlayP1 a {
+.overlayP1 a, .overlayP2 a, .overlayP3 a, .overlayP4 a {
   padding: 8px;
   text-decoration: none;
   font-size: 36px;
@@ -575,178 +334,12 @@ animation-duration: 0.6s;
   transition: 0.3s;
 }
 
-.overlayP1 a:hover,
-.overlayP1 a:focus {
+.overlayP1 a:hover, .overlayP1 a:focus, .overlayP2 a:hover, .overlayP2 a:focus,
+.overlayP3 a:hover, .overlayP3 a:focus, .overlayP4 a:hover, .overlayP4 a:focus {
   color: #f1f1f1;
 }
 
-.overlayP1 .closebtn {
-  position: absolute;
-  top: 20px;
-  right: 45px;
-  font-size: 60px;
-}
-
-@media screen and (max-height: 450px) {
-  .overlayP1 a {
-      font-size: 20px
-  }
-
-  .overlayP1 .closebtn {
-      font-size: 40px;
-      top: 15px;
-      right: 35px;
-  }
-}
-
-.overlayP2 {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: rgb(0, 0, 0);
-  background-color: rgba(0, 0, 0, 0.9);
-  overflow-x: hidden;
-  transition: 0.5s;
-}
-
-.overlayP2-content {
-  position: relative;
-  top: 25%;
-  width: 100%;
-  text-align: center;
-  margin-top: 30px;
-}
-
-.overlayP2 a {
-  padding: 8px;
-  text-decoration: none;
-  font-size: 36px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-}
-
-.overlayP2 a:hover,
-.overlayP2 a:focus {
-  color: #f1f1f1;
-}
-
-.overlayP2 .closebtn {
-  position: absolute;
-  top: 20px;
-  right: 45px;
-  font-size: 60px;
-}
-
-@media screen and (max-height: 450px) {
-  .overlayP2 a {
-      font-size: 20px
-  }
-
-  .overlayP2 .closebtn {
-      font-size: 40px;
-      top: 15px;
-      right: 35px;
-  }
-}
-
-
-
-.overlayP3 {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: rgb(0, 0, 0);
-  background-color: rgba(0, 0, 0, 0.9);
-  overflow-x: hidden;
-  transition: 0.5s;
-}
-
-.overlayP3-content {
-  position: relative;
-  top: 25%;
-  width: 100%;
-  text-align: center;
-  margin-top: 30px;
-}
-
-.overlayP3 a {
-  padding: 8px;
-  text-decoration: none;
-  font-size: 36px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-}
-
-.overlayP3 a:hover,
-.overlayP3 a:focus {
-  color: #f1f1f1;
-}
-
-.overlayP3 .closebtn {
-  position: absolute;
-  top: 20px;
-  right: 45px;
-  font-size: 60px;
-}
-
-@media screen and (max-height: 450px) {
-  .overlayP3 a {
-      font-size: 20px
-  }
-
-  .overlayP3 .closebtn {
-      font-size: 40px;
-      top: 15px;
-      right: 35px;
-  }
-}
-
-
-
-
-.overlayP4 {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: rgb(0, 0, 0);
-  background-color: rgba(0, 0, 0, 0.9);
-  overflow-x: hidden;
-  transition: 0.5s;
-}
-
-.overlayP4-content {
-  position: relative;
-  top: 25%;
-  width: 100%;
-  text-align: center;
-  margin-top: 30px;
-}
-
-.overlayP4 a {
-  padding: 8px;
-  text-decoration: none;
-  font-size: 36px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-}
-
-.overlayP4 a:hover,
-.overlayP4 a:focus {
-  color: #f1f1f1;
-}
-
+.overlayP1 .closebtn, .overlayP2 .closebtn, .overlayP3 .closebtn,
 .overlayP4 .closebtn {
   position: absolute;
   top: 20px;
@@ -755,10 +348,11 @@ animation-duration: 0.6s;
 }
 
 @media screen and (max-height: 450px) {
-  .overlayP4 a {
+  .overlayP1 a, .overlayP2 a, .overlayP3 a, .overlayP4 a {
       font-size: 20px
   }
 
+  .overlayP1 .closebtn, .overlayP2 .closebtn, .overlayP3 .closebtn,
   .overlayP4 .closebtn {
       font-size: 40px;
       top: 15px;
