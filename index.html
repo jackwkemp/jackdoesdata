@@ -124,8 +124,8 @@
     <br>
     <br>
 
-        <h2>dexter</h2>
-        <h3>dvla driver points script</h3>
+        <h2>DVLA Driver Points Script</h2>
+        <h3>I called him Dexter</h3>
 
         <div id="myNavP1" class="overlayP1">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNavP1()">&times;</a>
@@ -160,14 +160,188 @@
                 <p>There was a decrease in overall driver onboarding time, an increase on the total number of onboards per day and an increase in driver satisfaction from their onboarding experience.</p>
                 <br>
                 <br>
+                <h3>Code:</h3>
+                <div class="dex">
+                <pre>
+        <!--code Tag starts here -->
+                <code>
+                  def reset():
+    from os import path
+
+    with open("count.txt", "w+") as f:
+        f.truncate(0)
+        f.write("-1")
+
+    if path.exists("raw_output.txt"):
+        with open("raw_output.txt", "r+") as f:
+            f.truncate(0)
+
+    if path.exists("final_output.txt"):
+        with open("final_output.txt", "r+") as f:
+            f.truncate(0)
+
+
+def main():
+    from selenium import webdriver
+    from selenium.webdriver.common.keys import Keys
+    from selenium.webdriver.chrome.options import Options
+    from selenium.common.exceptions import NoSuchElementException
+    import time
+    import csv
+
+    # Comment this out to reverse headless function
+    # options = Options()
+    # options.headless = True
+
+    # Comment out 'options=options' to reverse headless function
+    browser = webdriver.Chrome("/Users/ext04/Documents/Dexter/chromedriver") #, options=options)
+
+    # Opens script on DVLA page
+    browser.get("https://www.viewdrivingrecord.service.gov.uk/driving-record/licence-number")
+
+    try:
+        with open("count.txt", "r") as f:
+            x = int(f.read())
+            f.close()
+    except IOError:
+        with open("count.txt", "w") as f:
+            f.write("0")
+            f.close()
+            x = 0
+
+    x += 1
+    y = (x + 1)
+
+    with open("count.txt", "w") as f:
+        f.write(str(x))
+
+    # Kill switch
+    with open("dexter_driver_list.csv") as f:
+        rowcount = sum(1 for _ in f)
+        kill = rowcount - 1
+        if x == kill:
+            post_process()
+
+
+    # Sends data from 1st column to the Driver Licence box
+    dlbar = browser.find_element_by_id("dln")
+    with open("dexter_driver_list.csv", "r") as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        for line in list(csv_reader)[x:y]:
+            dlbar.send_keys(str(line["Response 1"]).replace("{", "").replace("}", ""))
+            time.sleep(3)
+
+    # Sends data from 2nd column to the National Insurance Number box
+    ninobar = browser.find_element_by_id("nino")
+    with open("dexter_driver_list.csv", "r") as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        for line in list(csv_reader)[x:y]:
+            ninobar.send_keys(str(line["Response 2"]).replace("{", "").replace("}", ""))
+            time.sleep(3)
+
+    # Sends data from 3rd column to the Postcode box
+    pcbar = browser.find_element_by_id("postcode")
+    with open("dexter_driver_list.csv", "r") as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        for line in list(csv_reader)[x:y]:
+            pcbar.send_keys(str(line["Response 3"]).replace("{", "").replace("}", ""))
+            time.sleep(3)
+
+    # Clicks the 'I agree' tick box
+    browser.find_element_by_id("dwpPermission").click()
+    time.sleep(3)
+
+    # Clicks the 'View now' button
+    browser.find_element_by_id("submitDln").click()
+    time.sleep(2)
+
+    while True:
+        try:
+            browser.find_element_by_link_text("Penalties and disqualifications").click()
+            time.sleep(2)
+
+        except NoSuchElementException:
+            # Notes if the driver entered their details incorrectly
+            print("D", x, ",", "input error")
+            with open("raw_output.txt", "a") as f:
+                print("D", x, ",", "input error", file=f)
+                browser.quit()
+            main()
+
+        else:
+            pass
+            # Saves the driver's current points to 'raw_output.txt'
+            getpoints = browser.find_element_by_id("points")
+            print("D", x, ",", getpoints.text)
+            with open("raw_output.txt", "a") as f:
+                print("D", x, ",", file=f)
+                print(getpoints.text, file=f)
+                browser.quit()
+            main()
+
+
+def post_process():
+    import csv
+    from os import path, remove
+
+    bad_lines = ["You have", "To find out more", "Show information", "Start date:",
+                 "Period:", "End date:", "Offence date:"
+                 ]
+
+    # Separate list needed to keep the line from deleting completely
+    # e.g. '0 current penalty points' = '0 points'
+    bad_words = ["current penalty "]
+
+    # Removes unnecessary words and lines (above) and saves to another file
+    with open("raw_output.txt", "r") as oldfile, open("lean_output.txt", "w") as newfile:
+        for line in oldfile:
+            for word in bad_words:
+                line = line.replace(word, "")
+            if not any(bad_line in line for bad_line in bad_lines):
+                newfile.write(line)
+
+    # Converts the previously 'leaned' output to a single line and saves it to another file
+    with open("lean_output.txt", "r") as oldfile, open("singleline_output.txt", "w") as newfile:
+        newfile.write(" ".join(line.strip() for line in oldfile))
+
+    # Reorders the single line output
+    with open("singleline_output.txt", "r") as oldfile, open("final_output.txt", "w") as newfile:
+        reader = csv.reader(oldfile, delimiter="D", skipinitialspace=True)
+        for row in reader:
+            newfile.write("\n".join(row).lstrip())
+
+    if path.exists("count.txt"):
+        remove("count.txt")
+
+    if path.exists("lean_output.txt"):
+        remove("lean_output.txt")
+
+    if path.exists("singleline_output.txt"):
+        remove("singleline_output.txt")
+        exit()
+
+
+reset()
+
+main()
+
+post_process()
+        <!--code Tag ends here -->
+                </code>
+             </pre>
+             </div>
+                <br>
+                <br>
                 <br>
                 <br>
 
             </div>
         </div>
+        <img class="dvla_gif" src="dexter_draft.gif" width="560">
+        <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/5uVaOHEnlR0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+<br>
+<br>
         <button onclick="openNavP1()" class="button"> README</button>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/5uVaOHEnlR0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
         <!-- <img id="myImgP1" src="earth.gif"> -->
         <div id="myModal1" class="modal">
             <span class="closeP1">&times;</span>
@@ -221,16 +395,58 @@
               <p>The code takes three years away from 2022, then adds one day to 13.</p>
 
               <p>The result = '14/08/2019'</p>
+
+              <h3>Code:</h3>
+              <div class="pco">
+              <pre>
+      <!--code Tag starts here -->
+              <code>
+
+import datetime
+
+expiry_date = '13/08/2022'
+
+exp_day = datetime.datetime.strptime(expiry_date, '%d/%m/%Y').strftime('%d')
+
+month = datetime.datetime.strptime(expiry_date, '%d/%m/%Y').strftime('%m')
+
+year = datetime.datetime.strptime(expiry_date, '%d/%m/%Y').strftime('%Y')
+
+start_day = str(int(exp_day) + 1)
+
+start_month = month
+
+start_year = str(int(year) - 3)
+
+start_date = start_day + "/" + start_month + "/" + start_year
+
+print("Original expiry date: " + expiry_date)
+print("Predicted start date: " + start_date)
+print("The predicted start date has added one day to the 'day' and deducted three from the 'year'")
+                        <!--code Tag ends here -->
+                                </code>
+                             </pre>
+                             <h3>Result</h3>
+                             <pre>
+                             <!--code Tag starts here -->
+                             <code>
+Original expiry date: 13/08/2022
+Predicted start date: 14/08/2019
+The predicted start date has added one day to the 'day' and deducted three from the 'year'
+<!--code Tag ends here -->
+        </code>
+     </pre>
+                             </div>
             </div>
         </div>
 
 
 
-
-        <button onclick="openNavP3()" class="button"> README</button>
+<!-- <iframe frameborder="0" width="45%" height="450px" src="https://replit.com/@JackKemp3/pcostartdate?lite=true"></iframe> -->
 <img class="pco_img" src="driver_pco.jpeg" alt="driver_pco" height="450px">
-        <iframe frameborder="0" width="35%" height="450px" src="https://replit.com/@JackKemp3/pcostartdate?lite=true"></iframe>
-
+<br>
+<br>
+<button onclick="openNavP3()" class="button"> README</button>
         <div id="myModal3" class="modal">
             <span class="closeP3">&times;</span>
             <img class="modal-content" id="img03">
@@ -261,10 +477,68 @@
 <hr>
 
 
-        <h2>Project 5</h2>
-        <h3>Some text..</h3>
-        <button class="button">README</button>
-        <button class="button">Demo</button>
+        <h2>Annual Statements</h2>
+        <h3>SQL</h3>
+        <div id="myNavP5" class="overlayP5">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNavP5()">&times;</a>
+            <div class="overlayP5-content">
+              <h2>Generating an Annual Statement using SQL</h2>
+
+              <p>An example of a piece of work I completed at my previous employer.</p>
+
+              <h3>Aim:</h3>
+              <p>To improve our customer support efficiency, by being able to automatically generate Annual Statements for our Taxi fleet.</p>
+
+              <p>The process to provide an Annual Statement took approximately five minutes per statement.</p>
+              <p>The attached code was designed to be run in Metabase, download the result as a .csv and send to the appropriate driver.</p>
+
+            </div>
+        </div>
+        <div class="a_s">
+
+
+        <pre>
+<!--code Tag starts here -->
+        <code>
+          SELECT bp.completion_date                 AS completion_date,
+         Min(d.id_public)                   AS driver_id,
+         Min(CASE bp.last_attempt_psp_type
+               WHEN 'BRAINTREE' THEN 'APP PAYMENT'
+               WHEN 'CREDIT' THEN 'APP PAYMENT'
+               WHEN 'ADYEN' THEN 'APP PAYMENT'
+               WHEN 'WIRECARD' THEN 'APP PAYMENT'
+               WHEN 'CASH' THEN 'CASH'
+             END)                           AS payment_method,
+         SUM(bp.last_attempt_payment_value) AS gross_amount,
+         MIN(CASE
+               WHEN completion_date < timestamp '2019-07-31 00:00:00.000' THEN
+               (bp.last_attempt_payment_value - bp.last_attempt_payment_value * 0.9) / bp.last_attempt_payment_value * 100
+               WHEN completion_date > timestamp '2019-07-31 00:00:00.000' THEN
+               (bp.last_attempt_payment_value - bp.last_attempt_payment_value * 0.85) / bp.last_attempt_payment_value * 100
+  		   END)                           AS commission_percentage,
+         SUM(CASE
+               WHEN completion_date < timestamp '2019-07-31 00:00:00.000' THEN
+               bp.last_attempt_payment_value * 0.9
+               WHEN completion_date > timestamp '2019-07-31 00:00:00.000' THEN
+               bp.last_attempt_payment_value * 0.85
+             END)                           AS net_after_commission
+  FROM   dm.fact_booking_payment bp
+         join dm.dim_driver d
+           ON bp.id_driver = d.id
+  WHERE  d.id_public = '3843GM' --id_driver should be searchable
+         AND bp.is_completed = TRUE
+         AND bp.completion_date BETWEEN timestamp '2019-07-28 00:00:00.000' AND
+                                        timestamp '2019-08-03 00:00:00.000'
+  GROUP  BY rollup ( bp.completion_date )
+  ORDER  BY completion_date DESC
+<!--code Tag ends here -->
+        </code>
+     </pre>
+     </div>
+     <br>
+     <br>
+     <button onclick="openNavP5()" class="button"> README</button>
+
     <hr>
 
         <h2>Project 6</h2>

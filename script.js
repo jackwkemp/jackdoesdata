@@ -128,3 +128,11 @@ function openNavP4() {
 function closeNavP4() {
     document.getElementById("myNavP4").style.width = "0%";
 }
+
+function openNavP5() {
+    document.getElementById("myNavP5").style.width = "100%";
+}
+
+function closeNavP5() {
+    document.getElementById("myNavP5").style.width = "0%";
+}

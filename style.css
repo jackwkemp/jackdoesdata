@@ -182,10 +182,10 @@ margin-left: 22%;
 /* "About" button only at the moment */
 .button {
   cursor: pointer;
-  position: relative;
-  top: 50%;
+  /* position: relative; */
+  /* top: 50%; */
   margin-left: 22%;
-  margin-right: 4%;
+  /* margin-right: 8%; */
 }
 
 /* Project 1 Demo Gif */
@@ -200,15 +200,29 @@ margin-left: 22%;
 }
 
 .pco_img {
-  /* margin-left: 22%; */
+  margin-left: 22%;
   /* background-color: pink; */
+  /* padding: 50px; */
+  /* background-color: green; */
+  transition: transform .2s;
+  /* width: 200px; */
+  /* height: 200px; */
+  /* margin: 0 auto; */
+  /* z-index: 9999; */
+
+}
+
+.dvla_gif:hover, .pco_img:hover {
+  -ms-transform: scale(1.7); /* IE 9 */
+  -webkit-transform: scale(1.7); /* Safari 3-8 */
+  transform: scale(1.7);
 }
 
 iframe {
   border-radius: 5px;
   cursor: pointer;
   transition: 0.3s;
-  /* margin-right: 22%; */
+  margin-left: 22%;
   /* position: absolute; left: 40%; bottom: 9%; */
   /* position: inline; */
 
@@ -221,7 +235,7 @@ iframe {
 }
 
 /* Project 1's Close Button */
-.closeP1, .closeP2, .closeP3, .closeP4 {
+.closeP1, .closeP2, .closeP3, .closeP4, .closeP5 {
     position: absolute;
     top: 15px;
     right: 35px;
@@ -232,7 +246,8 @@ iframe {
 }
 
 .closeP1:hover, .closeP1:focus, .closeP2:hover, .closeP2:focus,
-.closeP3:hover, .closeP3:focus, .closeP4:hover, .closeP4:focus {
+.closeP3:hover, .closeP3:focus, .closeP4:hover, .closeP4:focus,
+.closeP5:hover, .closeP5:focus {
     color: #bbb;
     text-decoration: none;
     cursor: pointer;
@@ -311,7 +326,7 @@ animation-duration: 0.6s;
 }
 
 
-.overlayP1, .overlayP2, .overlayP3, .overlayP4 {
+.overlayP1, .overlayP2, .overlayP3, .overlayP4, .overlayP5 {
   height: 100%;
   width: 0;
   position: fixed;
@@ -327,7 +342,8 @@ animation-duration: 0.6s;
   overflow: scroll;
 }
 
-.overlayP1-content, .overlayP2-content, .overlayP3-content, .overlayP4-content {
+.overlayP1-content, .overlayP2-content, .overlayP3-content, .overlayP4-content,
+.overlayP5-content {
   position: relative;
   top: 10%;
   /* bottom: 25%; */
@@ -340,7 +356,7 @@ animation-duration: 0.6s;
 }
 
 /* the x button  */
-.overlayP1 a, .overlayP2 a, .overlayP3 a, .overlayP4 a {
+.overlayP1 a, .overlayP2 a, .overlayP3 a, .overlayP4 a, .overlayP5 a {
   padding: 8px;
   text-decoration: none;
   font-size: 36px;
@@ -351,12 +367,13 @@ animation-duration: 0.6s;
 }
 
 .overlayP1 a:hover, .overlayP1 a:focus, .overlayP2 a:hover, .overlayP2 a:focus,
-.overlayP3 a:hover, .overlayP3 a:focus, .overlayP4 a:hover, .overlayP4 a:focus {
+.overlayP3 a:hover, .overlayP3 a:focus, .overlayP4 a:hover, .overlayP4 a:focus,
+.overlayP5 a:hover, .overlayP5 a:focus {
   color: darkgrey;
 }
 
 .overlayP1 .closebtn, .overlayP2 .closebtn, .overlayP3 .closebtn,
-.overlayP4 .closebtn {
+.overlayP4 .closebtn, .overlayP5 .closebtn {
   position: absolute;
   top: 20px;
   right: 45px;
@@ -364,14 +381,22 @@ animation-duration: 0.6s;
 }
 
 @media screen and (max-height: 450px) {
-  .overlayP1 a, .overlayP2 a, .overlayP3 a, .overlayP4 a {
+  .overlayP1 a, .overlayP2 a, .overlayP3 a, .overlayP4 a, .overlayP5 a {
       font-size: 20px
   }
 
   .overlayP1 .closebtn, .overlayP2 .closebtn, .overlayP3 .closebtn,
-  .overlayP4 .closebtn {
+  .overlayP4 .closebtn, .overlayP5 .closebtn {
       font-size: 40px;
       top: 15px;
       right: 35px;
   }
+}
+
+.dvla_gif, .a_s, .dex, .pco {
+  /* background-color: pink; */
+  display: inline-block;
+  margin-left: 22%;
+  transition: transform .2s;
+
 }
