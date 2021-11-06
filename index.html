@@ -21,7 +21,7 @@
     <div class="home">
       <h1 id="Home">jack kemp</h1>
       <p>welcome to jack kemp's homepage.<br>
-      i'm a data scientist based in stockholm, sweden.</p>
+      i'm a data scientist based in wellington, new zealand.</p>
       <br>
       <br>
       <br>
@@ -130,10 +130,42 @@
         <div id="myNavP1" class="overlayP1">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNavP1()">&times;</a>
             <div class="overlayP1-content">
-                <p>stuff about dexter yadda yadda yadda</p>
+                <h2>DVLA Driver Points Script</h2>
+
+                <h3>Aim:</h3>
+                <p>To improve driver onboarding efficiency by automating a repetitive process</p>
+
+                <h3>Context:</h3>
+                <p>For a driver to be onboarded onto my previous employer’s platform, one of the onboarding agents had to manually check to see if the driver had not committed any serious offences e.g drink driving or driving without insurance.</p>
+
+                <h3>The process required three pieces of key information:</h3>
+                <p><u>-Driver Licence Number</u></p>
+                <p><u>-National Insurance Number</u></p>
+                <p><u>-Postcode</u></p>
+
+                <p>After obtaining driver permission to check their points for them, we could internally query our system to pull a .csv of the above information.</p>
+
+                <p>The Python script is designed to run with Selenium and Chromedriver.</p>
+
+                <h3>Script flow:</h3>
+                <p>- Selenium is called and opens the appropriate DVLA website (UK Government website)</p>
+                <p>- The script pulls the first row from the saved .csv (containing Driver Licence, National Insurance, Postcode)</p>
+                <p>- The script sends the information to the associated fields on the DVLA Website</p>
+                <p>- The script confirms the necessary fields and requests to log in</p>
+                <p>- (If there is a failure due to incorrect information, the script notes this and moves on to the next row)</p>
+                <p>- Once logged in, the script copies the driver’s points information and saves this information to a .txt file</p>
+                <p>- Once the script has looped through the list it ends and the onboarding agents can then compare the results against which drivers are booked in for onboarding that day</p>
+
+                <p>Another benefit that came out of this project was that our onboarding agents could proactively call drivers that were not compliant, preventing them from coming in.</p>
+                <p>There was a decrease in overall driver onboarding time, an increase on the total number of onboards per day and an increase in driver satisfaction from their onboarding experience.</p>
+                <br>
+                <br>
+                <br>
+                <br>
+
             </div>
         </div>
-        <button onclick="openNavP1()" class="button"> About</button>
+        <button onclick="openNavP1()" class="button"> README</button>
         <iframe width="560" height="315" src="https://www.youtube.com/embed/5uVaOHEnlR0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
         <!-- <img id="myImgP1" src="earth.gif"> -->
@@ -156,7 +188,7 @@
                 <p>stuff about DOCUMENT PREDICTION</p>
             </div>
         </div>
-        <button onclick="openNavP2()" class="button"> About</button>
+        <button onclick="openNavP2()" class="button"> README</button>
         <img id="myImgP2" src="doc_pred.gif">
         <div id="myModal2" class="modal">
             <span class="closeP2">&times;</span>
@@ -167,17 +199,38 @@
 
 
         <h2>pco start date generator</h2>
-        <h3>Some text..</h3>
+        <br>
         <div id="myNavP3" class="overlayP3">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNavP3()">&times;</a>
+
             <div class="overlayP3-content">
-                <p>stuff about Project 3</p>
+              <h2>PCO Start Date Generator</h2>
+
+              <h3>A piece of code that predicts the start date of a document </h3>
+
+              <p>A Private Hire Driver's Licence (PCO) is a mandetory document that is required for drivers to hold if they wish to partner with companies like Uber, Bolt and Ola in London, UK. </p>
+
+              <p>At my previous employer (a competitor of the above mentioned companies) we found an opportunity where we could save time autocompleting the start date of a PCO if we already knew the expiry date.</p>
+
+              <p>By getting the driver to upload the document and input the expiry date only, we were able to predict the start date of the document automatically with the code below.</p>
+
+              <p>The introducton to this script meant we could remove the start date requirement for drivers when they were uploading documents, save time for document validation agents and increase accuarcy when auditing documents internally.</p>
+
+              <p>In this case, the example expiry date is '13/08/2022'.</p>
+
+              <p>The code takes three years away from 2022, then adds one day to 13.</p>
+
+              <p>The result = '14/08/2019'</p>
             </div>
         </div>
-        <button onclick="openNavP3()" class="button"> About</button>
-        <iframe frameborder="0" width="50%" height="500px" src="https://replit.com/@JackKemp3/pcostartdate?lite=true"></iframe>
 
-        <!-- <img id="myImgP3" src="earth.gif"> -->
+
+
+
+        <button onclick="openNavP3()" class="button"> README</button>
+<img class="pco_img" src="driver_pco.jpeg" alt="driver_pco" height="450px">
+        <iframe frameborder="0" width="35%" height="450px" src="https://replit.com/@JackKemp3/pcostartdate?lite=true"></iframe>
+
         <div id="myModal3" class="modal">
             <span class="closeP3">&times;</span>
             <img class="modal-content" id="img03">
@@ -197,7 +250,7 @@
                 <p>stuff about Project 4</p>
             </div>
         </div>
-        <button onclick="openNavP4()" class="button"> About</button>
+        <button onclick="openNavP4()" class="button"> README</button>
         <img id="myImgP4" src="earth.gif">
         <div id="myModal4" class="modal">
             <span class="closeP4">&times;</span>
@@ -210,13 +263,13 @@
 
         <h2>Project 5</h2>
         <h3>Some text..</h3>
-        <button class="button">About</button>
+        <button class="button">README</button>
         <button class="button">Demo</button>
     <hr>
 
         <h2>Project 6</h2>
         <h3>Some text..</h3>
-        <button class="button">About</button>
+        <button class="button">README</button>
         <button class="button">Demo</button>
 
 

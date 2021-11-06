@@ -144,7 +144,7 @@ h2 {
 h3 {
   font-family: Helvetica Neue;
   color: rgb(40, 40, 40);
-  font-size: 90%;
+  font-size: 110%;
   margin-left: 22%;
   /* font-weight: lighter; */
 }
@@ -185,6 +185,7 @@ margin-left: 22%;
   position: relative;
   top: 50%;
   margin-left: 22%;
+  margin-right: 4%;
 }
 
 /* Project 1 Demo Gif */
@@ -198,13 +199,19 @@ margin-left: 22%;
   max-width:100px;
 }
 
+.pco_img {
+  /* margin-left: 22%; */
+  /* background-color: pink; */
+}
+
 iframe {
   border-radius: 5px;
   cursor: pointer;
   transition: 0.3s;
-  margin-left: 22%;
+  /* margin-right: 22%; */
   /* position: absolute; left: 40%; bottom: 9%; */
-  
+  /* position: inline; */
+
 
 
 }
@@ -311,32 +318,41 @@ animation-duration: 0.6s;
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: rgb(0, 0, 0);
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgb(245, 245, 245);
+  /* background-color: rgba(0,0,0, 0.9); */
   overflow-x: hidden;
+  overflow-y: hidden;
   transition: 0.5s;
+  /* overflow: hidden; */
+  overflow: scroll;
 }
 
 .overlayP1-content, .overlayP2-content, .overlayP3-content, .overlayP4-content {
   position: relative;
-  top: 25%;
+  top: 10%;
+  /* bottom: 25%; */
   width: 100%;
-  text-align: center;
-  margin-top: 30px;
+  /* text-align: center; */
+  /* margin-top: 30px; */
+
+
+
 }
 
+/* the x button  */
 .overlayP1 a, .overlayP2 a, .overlayP3 a, .overlayP4 a {
   padding: 8px;
   text-decoration: none;
   font-size: 36px;
-  color: #818181;
+  /* color: #818181; */
+  color: rgb(40, 40, 40);
   display: block;
   transition: 0.3s;
 }
 
 .overlayP1 a:hover, .overlayP1 a:focus, .overlayP2 a:hover, .overlayP2 a:focus,
 .overlayP3 a:hover, .overlayP3 a:focus, .overlayP4 a:hover, .overlayP4 a:focus {
-  color: #f1f1f1;
+  color: darkgrey;
 }
 
 .overlayP1 .closebtn, .overlayP2 .closebtn, .overlayP3 .closebtn,
