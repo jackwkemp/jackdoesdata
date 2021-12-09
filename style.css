@@ -1,402 +1,137 @@
-html {
-  scroll-behavior: smooth;
-  margin:0;
-  padding:0;
-  /* overflow-x:hidden; */
-}
-
-body {
-   margin: 0;
-   padding:0;
-   background-color: rgb(245, 245, 245);
-   /* overflow-x:hidden; */
-   /* background-color: grey; */
-}
-
 * {
   box-sizing: border-box;
 }
 
-.wrapper{
-  overflow-x: hidden;
-  position: relative;
-}
 
+body {
+  font-family: Helvetica Neue;
+}
 
 .navbar {
-  font-size: 30px;
-  margin-left: 22%;
-  margin-top: 1%;
-  font-family: Helvetica Neue;
+  overflow: hidden;
+  background-color: white;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  /* color: #f2f2f2; */
+  text-align: center;
+  padding: 14px 16px;
+  /* text-decoration: none; */
+  font-size: 17px;
+  text-decoration: none;
   color: rgb(40, 40, 40);
-  min-width: 800px;
-  position: absolute;
 }
 
-
-@media only screen
-and (min-width : 300px)
-and (max-width : 500px) {
-
-   .navbar {
-    font-size: 12px;
-    margin-top: 1%;
-   }
-
+.navbar a:hover {
+  background: #ddd;
+  color: black;
 }
 
-@media only screen
-and (min-width : 500px)
-and (max-width : 800px) {
-
-   .navbar {
-    font-size: 25px;
-    margin-top: 1%;
-   }
-
-}
-
-.nav-about, .nav-portfolio, .nav-contact {
-margin-left: 20px;
+.home {
+  text-align: center;
 }
 
 a {
   text-decoration: none;
-  color: rgb(40, 40, 40);
+  color: inherit;
 }
 
-.about {
-background-color: rgb(236, 226, 224);
-margin-top: -50px;
-z-index: 1;
+h2, p, code, pre {
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
-.timeline {
-/* min-width: 1400px; */
-/* background-color: #333; */
-overflow: auto;
-white-space: nowrap;
+/* code {
+  display: block;
+} */
+
+
+
+/* Container for flexboxes */
+.row {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.portfolio {
-background-color: rgb(245, 245, 245);
-margin-top: -50px;
+/* Create four equal columns */
+.column {
+  flex: 25%;
+  padding: 10px;
 }
 
-.contact {
-background-color: rgb(236, 226, 224);
-margin-top: -50px;
+/* On screens that are 992px wide or less, go from four columns to two columns */
+@media screen and (max-width: 992px) {
+  .column {
+    flex: 50%;
+  }
+}
+
+/* On screens that are 600px wide or less, make the columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .row {
+    flex-direction: column;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Float four columns side by side */
+/* .column {
+  float: left;
+  width: 25%;
+  padding: 0 10px;
+} */
+
+/* Remove extra left and right margins, due to padding */
+/* .row {margin: 0 -5px;} */
+
+/* Clear floats after the columns */
+/* .row:after {
+  content: "";
+  display: table;
+  clear: both;
+} */
+
+/* Responsive columns */
+/* @media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+} */
+
+/* Style the counter cards */
+.card, .card1 {
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
+  padding: 16px;
+  text-align: center;
+  background-color: #f1f1f1;
 }
 
 .fa {
-  font-size: 40px;
-  width: 30px;
+  /* font-size: 40px; */
+  /* width: 30px; */
   text-decoration: none;
-  border-radius: 50%;
-  margin-left: 22%;
+  /* border-radius: 50%; */
+  /* margin-left: 22%; */
 }
 
 .fa-github, .fa-linkedin {
   color: rgb(5, 5, 5);
-}
-
-
-h1 {
-margin-left: 22%;
-font-size: 72px;
-padding-top: 5%;
-font-family: Helvetica Neue;
-color: rgb(40, 40, 40);
-/* position: absolute; */
-}
-
-@media only screen
-and (min-width : 300px)
-and (max-width : 500px) {
-
-   h1 {
-    font-size: 45px;
-    padding-top: 5%;
-   }
-
-}
-
-@media only screen
-and (min-width : 500px)
-and (max-width : 800px) {
-
-   h1 {
-    font-size: 50px;
-    padding-top: 5%;
-   }
-
-}
-
-h2 {
-  font-family: Helvetica Neue;
-  color: rgb(40, 40, 40);
-  /* text-align: center; */
-  font-size: 150%;
-  margin-left: 22%;
-  /* margin-right: 10px; */
-}
-
-h3 {
-  font-family: Helvetica Neue;
-  color: rgb(40, 40, 40);
-  font-size: 110%;
-  margin-left: 22%;
-  /* font-weight: lighter; */
-}
-
-p {
-margin-left: 22%;
-margin-right: 10%;
-font-family: Helvetica Neue;
-color: rgb(40, 40, 40);
-
-}
-
-ul {
-margin-left: 19%;
-font-family: Helvetica Neue;
-color: rgb(40, 40, 40);
-
-}
-
-#job, #dots, #company ul{
-  list-style: none;
-}
-#job #dots, #company li{
-  display: inline;
-}
-
-li {
-  display: inline-block;
-}
-
-hr{
-margin-left: 22%;
-}
-
-/* "About" button only at the moment */
-.button {
-  cursor: pointer;
-  /* position: relative; */
-  /* top: 50%; */
-  margin-left: 22%;
-  /* margin-right: 8%; */
-}
-
-/* Project 1 Demo Gif */
-#myImgP1, #myImgP2, #myImgP3, #myImgP4 {
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s;
-  margin-left: 22%;
-  /* position: absolute; left: 40%; bottom: 9%; */
-  width:100%;
-  max-width:100px;
-}
-
-.pco_img {
-  margin-left: 22%;
-  /* background-color: pink; */
-  /* padding: 50px; */
-  /* background-color: green; */
-  transition: transform .2s;
-  /* width: 200px; */
-  /* height: 200px; */
-  /* margin: 0 auto; */
-  /* z-index: 9999; */
-
-}
-
-.dvla_gif:hover, .pco_img:hover {
-  -ms-transform: scale(1.7); /* IE 9 */
-  -webkit-transform: scale(1.7); /* Safari 3-8 */
-  transform: scale(1.7);
-}
-
-iframe {
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s;
-  margin-left: 22%;
-  /* position: absolute; left: 40%; bottom: 9%; */
-  /* position: inline; */
-
-
-
-}
-
-#myImgP1:hover, #myImgP2:hover, #myImgP3:hover, #myImgP4:hover, .fa:hover {
-    opacity: 0.7;
-}
-
-/* Project 1's Close Button */
-.closeP1, .closeP2, .closeP3, .closeP4, .closeP5 {
-    position: absolute;
-    top: 15px;
-    right: 35px;
-    color: #f1f1f1;
-    font-size: 40px;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-.closeP1:hover, .closeP1:focus, .closeP2:hover, .closeP2:focus,
-.closeP3:hover, .closeP3:focus, .closeP4:hover, .closeP4:focus,
-.closeP5:hover, .closeP5:focus {
-    color: #bbb;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  padding-top: 100px;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgb(0, 0, 0);
-  background-color: rgba(0, 0, 0, 0.9);
-}
-
-/* Communal Modal Content (image) */
-.modal-content {
-margin: auto;
-display: block;
-width: 80%;
-max-width: 700px;
-}
-
-/* Communal Caption of Modal Image */
-#caption {
-  margin: auto;
-  display: block;
-  width: 80%;
-  max-width: 700px;
-  text-align: center;
-  color: #ccc;
-  padding: 10px 0;
-  height: 150px;
-  font-family: Helvetica;
-}
-
-/* Communal Modal Add Animation */
-.modal-content,
-#caption {
--webkit-animation-name: zoom;
--webkit-animation-duration: 0.6s;
-animation-name: zoom;
-animation-duration: 0.6s;
-}
-
-@-webkit-keyframes zoom {
-  from {
-      -webkit-transform: scale(0)
-  }
-
-  to {
-      -webkit-transform: scale(1)
-  }
-}
-
-@keyframes zoom {
-  from {
-      transform: scale(0)
-  }
-
-  to {
-      transform: scale(1)
-  }
-}
-
-/* 100% Image Width on Smaller Screens */
-@media only screen and (max-width: 700px) {
-  .modal-content {
-      width: 100%;
-  }
-}
-
-
-.overlayP1, .overlayP2, .overlayP3, .overlayP4, .overlayP5 {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: rgb(245, 245, 245);
-  /* background-color: rgba(0,0,0, 0.9); */
-  overflow-x: hidden;
-  overflow-y: hidden;
-  transition: 0.5s;
-  /* overflow: hidden; */
-  overflow: scroll;
-}
-
-.overlayP1-content, .overlayP2-content, .overlayP3-content, .overlayP4-content,
-.overlayP5-content {
-  position: relative;
-  top: 10%;
-  /* bottom: 25%; */
-  width: 100%;
-  /* text-align: center; */
-  /* margin-top: 30px; */
-
-
-
-}
-
-/* the x button  */
-.overlayP1 a, .overlayP2 a, .overlayP3 a, .overlayP4 a, .overlayP5 a {
-  padding: 8px;
-  text-decoration: none;
-  font-size: 36px;
-  /* color: #818181; */
-  color: rgb(40, 40, 40);
-  display: block;
-  transition: 0.3s;
-}
-
-.overlayP1 a:hover, .overlayP1 a:focus, .overlayP2 a:hover, .overlayP2 a:focus,
-.overlayP3 a:hover, .overlayP3 a:focus, .overlayP4 a:hover, .overlayP4 a:focus,
-.overlayP5 a:hover, .overlayP5 a:focus {
-  color: darkgrey;
-}
-
-.overlayP1 .closebtn, .overlayP2 .closebtn, .overlayP3 .closebtn,
-.overlayP4 .closebtn, .overlayP5 .closebtn {
-  position: absolute;
-  top: 20px;
-  right: 45px;
-  font-size: 60px;
-}
-
-@media screen and (max-height: 450px) {
-  .overlayP1 a, .overlayP2 a, .overlayP3 a, .overlayP4 a, .overlayP5 a {
-      font-size: 20px
-  }
-
-  .overlayP1 .closebtn, .overlayP2 .closebtn, .overlayP3 .closebtn,
-  .overlayP4 .closebtn, .overlayP5 .closebtn {
-      font-size: 40px;
-      top: 15px;
-      right: 35px;
-  }
-}
-
-.dvla_gif, .a_s, .dex, .pco {
-  /* background-color: pink; */
-  display: inline-block;
-  margin-left: 22%;
-  transition: transform .2s;
-
 }
