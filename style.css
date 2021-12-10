@@ -8,30 +8,57 @@ body {
 }
 
 .navbar {
+  width: 100%;
+  background-color: white;
+  overflow: auto;
+}
+
+.navbar a {
+  float: left;
+  padding: 12px;
+  color: white;
+  text-decoration: none;
+  font-size: 17px;
+  width: 16.6%; /* Four links of equal widths */
+  text-align: center;
+  color: black;
+}
+
+.navbar a:hover {
+  background: #f1f1f1;
+  color: black;
+}
+
+.navbar a.active {
+  background-color: black;
+}
+
+/* .navbar {
   overflow: hidden;
   background-color: white;
   position: fixed;
   top: 0;
   width: 100%;
-  
-}
 
-.navbar a {
+} */
+
+/* .navbar a {
   float: left;
-  display: block;
+  display: block; */
   /* color: #f2f2f2; */
-  text-align: center;
-  padding: 14px 16px;
+  /* text-align: center;
+  padding: 14px 16px; */
   /* text-decoration: none; */
-  font-size: 17px;
+  /* font-size: 17px;
   text-decoration: none;
   color: rgb(40, 40, 40);
-}
+  margin-left: 3%;
+} */
 
-.navbar a:hover {
+/* .navbar a:hover {
   background: #ddd;
   color: black;
-}
+} */
 
 .home {
   text-align: center;
