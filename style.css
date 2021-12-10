@@ -13,6 +13,7 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
+  
 }
 
 .navbar a {
@@ -46,9 +47,9 @@ h2, p, code, pre {
   margin-right: 10%;
 }
 
-/* code {
-  display: block;
-} */
+pre {
+  overflow-x: scroll;
+}
 
 
 
