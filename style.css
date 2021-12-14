@@ -2,7 +2,6 @@
   box-sizing: border-box;
 }
 
-
 body {
   font-family: Helvetica Neue;
 }
@@ -33,33 +32,6 @@ body {
   background-color: black;
 }
 
-/* .navbar {
-  overflow: hidden;
-  background-color: white;
-  position: fixed;
-  top: 0;
-  width: 100%;
-
-} */
-
-/* .navbar a {
-  float: left;
-  display: block; */
-  /* color: #f2f2f2; */
-  /* text-align: center;
-  padding: 14px 16px; */
-  /* text-decoration: none; */
-  /* font-size: 17px;
-  text-decoration: none;
-  color: rgb(40, 40, 40);
-  margin-left: 3%;
-} */
-
-/* .navbar a:hover {
-  background: #ddd;
-  color: black;
-} */
-
 .home {
   text-align: center;
 }
@@ -78,8 +50,6 @@ pre {
   overflow-x: scroll;
 }
 
-
-
 /* Container for flexboxes */
 .row {
   display: flex;
@@ -93,7 +63,7 @@ pre {
 }
 
 /* On screens that are 992px wide or less, go from four columns to two columns */
-@media screen and (max-width: 1050px) {
+@media screen and (max-width: 1240px) {
   .column {
     flex: 50%;
   }
@@ -106,46 +76,8 @@ pre {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-/* Float four columns side by side */
-/* .column {
-  float: left;
-  width: 25%;
-  padding: 0 10px;
-} */
-
-/* Remove extra left and right margins, due to padding */
-/* .row {margin: 0 -5px;} */
-
-/* Clear floats after the columns */
-/* .row:after {
-  content: "";
-  display: table;
-  clear: both;
-} */
-
-/* Responsive columns */
-/* @media screen and (max-width: 600px) {
-  .column {
-    width: 100%;
-    display: block;
-    margin-bottom: 20px;
-  }
-} */
-
 /* Style the counter cards */
-.card, .card1 {
+.card {
   /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
   padding: 16px;
   text-align: center;
