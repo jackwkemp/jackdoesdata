@@ -4,12 +4,16 @@
 
 body {
   font-family: Helvetica Neue;
+  margin: 0;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
 .navbar {
   width: 100%;
   background-color: white;
   overflow: auto;
+  position: fixed;
 }
 
 .navbar a {
@@ -18,7 +22,7 @@ body {
   color: white;
   text-decoration: none;
   font-size: 17px;
-  width: 16.6%; /* Four links of equal widths */
+  width: 13.3%; /* Four links of equal widths */
   text-align: center;
   color: black;
 }
@@ -42,8 +46,8 @@ a {
 }
 
 h2, p, code, pre {
-  margin-left: 10%;
-  margin-right: 10%;
+  /* margin-left: 10%;
+  margin-right: 10%; */
 }
 
 pre {
@@ -58,7 +62,7 @@ pre {
 
 /* Create four equal columns */
 .column {
-  flex: 20%;
+  flex: 5%;
   padding: 10px;
 }
 
@@ -70,7 +74,7 @@ pre {
 }
 
 /* On screens that are 600px wide or less, make the columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 610px) {
   .row {
     flex-direction: column;
   }
@@ -81,6 +85,7 @@ pre {
   /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
   padding: 16px;
   text-align: center;
+  /* background-color: #f1f1f1; */
   background-color: #f1f1f1;
 }
 
