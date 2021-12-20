@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+
+
+  <body>
+
+    <div class="navbar">
+      <a href="index.html" class="fa fa-home"></a>
+      <a href="about.html" class="fa fa-info"></a>
+      <a href="https://www.linkedin.com/in/jackwkemp/" target="_blank" class="fa fa-linkedin"></a>
+      <a href="https://github.com/jackwkemp" target="_blank" class="fa fa-github"></a>
+      <a href="mailto:jackwilliamkemp@gmail.com" class="fa fa-google"></a>
+      <a href="tel:+447401355871" class="fa fa-whatsapp"></a>
+
+</div>
+
+  <div class="non_code">
+  <br>
+  <br>
+  <br>
+  <h2>Document Prediction</h2>
+
+  <p>An example of a piece of work I completed at my previous employer.</p>
+
+  <h2>Aim:</h2>
+  <p>To improve our customer support efficiency, by being able to automatically generate Annual Statements for our Taxi fleet.</p>
+
+  <p>The process to provide an Annual Statement took approximately five minutes per statement.</p>
+  <p>The attached code was designed to be run in Metabase, download the result as a .csv and send to the appropriate driver.</p>
+
+<h2>Code:</h2>
+
+
+
+<pre>
+<!--code Tag starts here -->
+<code>
+SELECT bp.completion_date                 AS completion_date,
+Min(d.id_public)                   AS driver_id,
+Min(CASE bp.last_attempt_psp_type
+   WHEN 'BRAINTREE' THEN 'APP PAYMENT'
+   WHEN 'CREDIT' THEN 'APP PAYMENT'
+   WHEN 'ADYEN' THEN 'APP PAYMENT'
+   WHEN 'WIRECARD' THEN 'APP PAYMENT'
+   WHEN 'CASH' THEN 'CASH'
+ END)                           AS payment_method,
+SUM(bp.last_attempt_payment_value) AS gross_amount,
+MIN(CASE
+   WHEN completion_date < timestamp '2019-07-31 00:00:00.000' THEN
+   (bp.last_attempt_payment_value - bp.last_attempt_payment_value * 0.9) /
+   bp.last_attempt_payment_value * 100
+   WHEN completion_date > timestamp '2019-07-31 00:00:00.000' THEN
+   (bp.last_attempt_payment_value - bp.last_attempt_payment_value * 0.85) /
+   bp.last_attempt_payment_value * 100
+END)                           AS commission_percentage,
+SUM(CASE
+   WHEN completion_date < timestamp '2019-07-31 00:00:00.000' THEN
+   bp.last_attempt_payment_value * 0.9
+   WHEN completion_date > timestamp '2019-07-31 00:00:00.000' THEN
+   bp.last_attempt_payment_value * 0.85
+ END)                           AS net_after_commission
+FROM   dm.fact_booking_payment bp
+join dm.dim_driver d
+ON bp.id_driver = d.id
+WHERE  d.id_public = '3843GM' --id_driver should be searchable
+AND bp.is_completed = TRUE
+AND bp.completion_date BETWEEN timestamp '2019-07-28 00:00:00.000' AND
+                            timestamp '2019-08-03 00:00:00.000'
+GROUP  BY rollup ( bp.completion_date )
+ORDER  BY completion_date DESC
+<!--code Tag ends here -->
+</code>
+</pre>
+
+</div>
+
+  <script src="script.js"></script>
+  <script type="text/javascript" src="particles.min.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+
+</body>
+</html>

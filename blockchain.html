@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+
+
+  <body>
+
+    <div class="navbar">
+      <a href="index.html" class="fa fa-home"></a>
+      <a href="about.html" class="fa fa-info"></a>
+      <a href="https://www.linkedin.com/in/jackwkemp/" target="_blank" class="fa fa-linkedin"></a>
+      <a href="https://github.com/jackwkemp" target="_blank" class="fa fa-github"></a>
+      <a href="mailto:jackwilliamkemp@gmail.com" class="fa fa-google"></a>
+      <a href="tel:+447401355871" class="fa fa-whatsapp"></a>
+
+</div>
+
+  <div class="non_code">
+  <br>
+  <br>
+  <br>
+  <h2>Blockchain Testing</h2>
+
+
+<p>A shallow dive into the world of Blockchain technology.</p>
+
+<p>'Block.py' contains a Class that is called on 'main.py' - it allows you to
+see the difference in the hashed code if you make a manual change to the blocks</p>
+
+<p>'App.py' is a bit more fun. It mimics the idea of making a transaction through a Python script.</p>
+
+<p>I signed up for a test account with Infura (A portal to the Etheruem network) I also signed up to Ganache using a Web3 binding. This allowed me to make a few fake transactions on the blockchain and physically see the results!</p>
+
+  <pre>
+<!--code Tag starts here -->
+  <code>
+
+    import hashlib
+
+class Block():
+    def __init__(self, previous_hash, transaction):
+        self.transactions = transaction
+        self.previous_hash = previous_hash
+        string_to_hash = "".join(transaction) + previous_hash
+        self.block_hash = hashlib.sha256(string_to_hash.encode()).hexdigest()
+            <!--code Tag ends here -->
+                    </code>
+                 </pre>
+<p>Some more test explaining stuff!</p>
+
+  <pre>
+  <!--code Tag starts here -->
+  <code>
+
+from block import Block
+
+blockchain = []
+
+genesis_block = Block("Here we go...", ["Jack sent 5 BTC to Mike"])
+
+second_block = Block(genesis_block.block_hash, ["Mike sent 10 BTC to Jack"])
+
+third_block = Block(second_block.block_hash, ["Jack sent 5 BTC to Mike"])
+
+print("Block hash: genesis block:")
+print(genesis_block.block_hash)
+
+print("Block hash: second block:")
+print(second_block.block_hash)
+
+print("Block hash: third block:")
+print(third_block.block_hash)
+  <!--code Tag ends here -->
+                                   </code>
+                                </pre>
+
+<p>Stuff about executing fake transaction</p>
+
+<pre>
+<!--code Tag starts here -->
+<code>
+import json
+from web3 import Web3
+
+# infura_url = "infura_url"
+#
+# web3 = Web3(Web3.HTTPProvider(infura_url))
+
+ganache_url = "http://ganache_url"
+
+web3 = Web3(Web3.HTTPProvider(ganache_url))
+
+account_1 = "xxxxxxxACCOUNT1xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+account_2 = "xxxxxxxACCOUNT2xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+private_key = "private_keyprivate_key"
+
+nonce = web3.eth.getTransactionCount(account_1)
+
+tx = {
+  'nonce': nonce,
+  'to': account_2,
+  'value': web3.toWei(1, 'ether'),
+  'gas': 2000000,
+  'gasPrice': web3.toWei(50, 'gwei')
+}
+
+signed_tx = web3.eth.account.sign_transaction(tx, private_key)
+tx_hash = web3.eth.send_raw_transaction(signed_tx.rawTransaction)
+print(web3.toHex(tx_hash))
+<!--code Tag ends here -->
+</code>
+</pre>
+
+</div>
+
+
+
+  <script src="script.js"></script>
+  <script type="text/javascript" src="particles.min.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+
+</body>
+</html>
