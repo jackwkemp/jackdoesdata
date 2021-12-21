@@ -5,17 +5,24 @@
 body {
   font-family: Helvetica Neue;
   margin: 0;
-  margin-left: 10%;
-  margin-right: 10%;
+  /* margin-left: 10%;
+  margin-right: 10%; */
 }
 
 .navbar {
   width: 100%;
-  background-color: white;
+  /* width: 80%; */
+  background-color: White;
   overflow: auto;
   position: fixed;
   z-index: 100;
+  box-shadow: 0px 2px 0px 0px rgba(0,0,0,0.3);
 
+
+}
+
+.fa-home{
+  margin-left: 10%;
 }
 
 .navbar a {
@@ -25,6 +32,7 @@ body {
   text-decoration: none;
   font-size: 17px;
   width: 13.3%; /* Four links of equal widths */
+  /* width: 16.5%; */
   text-align: center;
   color: black;
 }
@@ -43,6 +51,11 @@ body {
   text-align: center;
 }
 
+.non_code {
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
 a {
   text-decoration: none;
   color: inherit;
@@ -56,18 +69,22 @@ h2, p, code, pre {
 
 pre {
   overflow-x: scroll;
+  /* background-color: #f5f5f5; */
 }
 
 /* Container for flexboxes */
 .row {
   display: flex;
   flex-wrap: wrap;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
 /* Create four equal columns */
 .column {
   flex: 5%;
   padding: 10px;
+
 }
 
 /* On screens that are 992px wide or less, go from four columns to two columns */
