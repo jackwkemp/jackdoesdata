@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+
+
+  <body>
+
+    <div class="navbar">
+      <a href="index.html" class="fa fa-home"></a>
+      <a href="about.html" class="fa fa-info"></a>
+      <a href="https://www.linkedin.com/in/jackwkemp/" target="_blank" class="fa fa-linkedin"></a>
+      <a href="https://github.com/jackwkemp" target="_blank" class="fa fa-github"></a>
+      <a href="mailto:jackwilliamkemp@gmail.com" class="fa fa-google"></a>
+      <a href="tel:+447401355871" class="fa fa-whatsapp"></a>
+
+</div>
+
+  <div class="non_code">
+    <br>
+    <br>
+    <br>
+    <br>
+  <h2>Twilio Testing</h2>
+  <br>
+  <h3>Context:</h3>
+  <p>My previous employer wanted to test out a new company/system for sending out SMS messages to taxi and private hire vehicle drivers in London, UK. This product was to be used by our Quality of Service team to contact drivers who had a high number of cancellations, warning them that if they continued to cancel rides, then we would temporarily disable their account.</p>
+<br>
+<h3>Aim:</h3>
+<p>To test out a new service provider for sending outbound SMS messages</p>
+<br>
+<h3>Outcome:</h3>
+<p>I created a test environment as shown below:</p>
+<p>The Flask web application connects directly to the Twilio API and allows users with the correct authorisation to send a message to any phone number.</p>
+
+  <pre>
+<!--code Tag starts here -->
+  <code>
+
+    from twilio.rest import Client
+    from flask import Flask, render_template, request
+
+    app = Flask(__name__)
+
+    account_sid = 'INSERT ACCOUNT SID HERE'
+    auth_token = 'INSERT AUTH TOKEN HERE'
+    client = Client(account_sid, auth_token)
+
+
+    @app.route('/')
+    def index():
+        return render_template('index.html')
+
+
+    @app.route('/send', methods=['POST'])
+    def send():
+        message = client.messages.create(
+            from_='INSERT TWILIO PHONE NUMBER HERE',
+            body=request.form['sms'],
+            to=request.form['number']
+        )
+
+        return message.sid
+
+
+    if __name__ == '__main__':
+        app.run(debug=True)
+            <!--code Tag ends here -->
+                    </code>
+                 </pre>
+
+
+</div>
+
+
+  <script src="script.js"></script>
+  <script type="text/javascript" src="particles.min.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+
+</body>
+</html>
