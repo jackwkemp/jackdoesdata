@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+
+
+  <body>
+
+    <div class="navbar">
+      <a href="index.html" class="fa fa-home"></a>
+      <a href="about.html" class="fa fa-info"></a>
+      <a href="https://www.linkedin.com/in/jackwkemp/" target="_blank" class="fa fa-linkedin"></a>
+      <a href="https://github.com/jackwkemp" target="_blank" class="fa fa-github"></a>
+      <a href="mailto:jackwilliamkemp@gmail.com" class="fa fa-google"></a>
+      <a href="tel:+447401355871" class="fa fa-whatsapp"></a>
+
+</div>
+
+  <div class="non_code">
+    <br>
+    <br>
+    <br>
+    <br>
+  <h2>Driver Centre Metrics</h2>
+  <br>
+  <h3>Context:</h3>
+  <p>I was given a task by my previous employer to build a dashboard. The dashboard had to measure the perfomance of our agents as well as driver performance.</p>
+<br>
+<h3>Aim:</h3>
+<p>The dashboard's purpose was to be able to summarise a wide range of data quickly, to improve the driver onboarding experience and driver performance.</p>
+<br>
+<h3>Outcome:</h3>
+<p>Insights drawn from the main Driver Centre dashboard included:</p>
+<p>- A greater number of drivers could be onboarded in person (Monday, Wednesday, Friday)</p>
+<p>- Drivers onboarded in person tended to perform better (completed more tours on average, had a lower cancellation ratio, and were more likely to complete their first tour sooner)</p>
+<br>
+<p>Insights drawn from the Electric vs Non Electric dashboard included:</p>
+<p>- A larger number of non electric vehicles were being onboarded to the platform</p>
+<p>- Average driver rating was higher among electirc vehicles</p>
+<br>
+<h3>Homescreen displaying summary statistics</h3>
+
+<img src="driver_centre_home.png" alt="driver_centre_home">
+<img src="driver_centre_home_2.png" alt="driver_centre_home_2">
+<img src="driver_centre_home_3.png" alt="driver_centre_home_3">
+<br>
+<br>
+<br>
+<br>
+
+<h3>Metrics highlighting electric vs non electric vehicles:</h3>
+<img src="driver_centre_ev_v_non_ev.png" alt="driver_centre_ev_v_non_ev">
+<img src="driver_centre_ev_v_non_ev_2.png" alt="driver_centre_ev_v_non_ev_2">
+<br>
+<br>
+<br>
+<br>
+<h3>SQL Queries:</h3>
+
+
+<pre>
+<!--code Tag starts here -->
+<code>
+
+Driver Centre Metrics (Whitechapel)
+
+-- new_ob_count --
+
+select count(distinct(d.id)) as new_onboards
+
+from daily.mytaxi_drivers md
+
+left join dm.fact_driver fd on md.id_company = fd.id_company
+left join dm.dim_driver d on md.id = d.id
+left join dm.fact_booking_request br on d.id = br.id_driver
+left join dm.dim_booking_status bs on br.id_booking_status = bs.id
+
+-- where md.date_active_since BETWEEN timestamp '2021-04-12 09:00:00.000' AND CURRENT_TIMESTAMP
+-- [[where md.date_active_since>={{md.date_active_since}}]]
+
+where md.date_active_since >= {{ start }}
+and md.date_active_since <= {{ end }}
+
+
+
+and md.id_office = 148
+and d.is_phv = true
+
+--------------------------------------------------------
+
+-- new_ob_ride_count --
+
+select
+sum(tours)
+
+from
+
+(select
+cast(fd.id_driver as varchar) as driver_id,
+md.date_active_since,
+-- date_trunc('day', md.date_active_since) as day_conv,
+fd.first_tour,
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1) as days_till_first_tour,
+fd.tours,
+avg(d.rating) as avg_driver_rating,
+d.rating_count
+
+from daily.mytaxi_drivers md
+
+left join dm.fact_driver fd on md.id_company = fd.id_company
+left join dm.dim_driver d on md.id = d.id
+left join dm.fact_booking_request br on d.id = br.id_driver
+left join dm.dim_booking_status bs on br.id_booking_status = bs.id
+
+where md.date_active_since >= {{ start }}
+and md.date_active_since <= {{ end }}
+
+and md.id_office = 148
+and d.is_phv = true
+group by
+cast(fd.id_driver as varchar),
+md.date_active_since,
+-- date_trunc('day', md.date_active_since),
+fd.first_tour,
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1),
+fd.tours,
+d.rating_count
+order by md.date_active_since) sub
+
+--------------------------------------------------------
+
+-- new_ob_avg_days_till_first_tour --
+
+Select
+avg(cast(days_till_first_tour as bigint)) as avg_days_till_first_tour
+
+from
+
+(select
+cast(fd.id_driver as varchar) as driver_id,
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1) as days_till_first_tour
+
+
+from daily.mytaxi_drivers md
+
+left join dm.fact_driver fd on md.id_company = fd.id_company
+left join dm.dim_driver d on md.id = d.id
+left join dm.fact_booking_request br on d.id = br.id_driver
+left join dm.dim_booking_status bs on br.id_booking_status = bs.id
+
+where md.date_active_since >= {{ start }}
+and md.date_active_since <= {{ end }}
+
+and md.id_office = 148
+and d.is_phv = true
+group by
+cast(fd.id_driver as varchar),
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1)) sub
+
+
+--------------------------------------------------------
+
+-- new_ob_tours_date_active_since_and_daily_onboards --
+
+select
+date_trunc('day', date_active_since) as date_active_since,
+count(driver_id) as daily_onboards,
+sum(tours) as no_of_tours
+
+
+from
+
+(select
+cast(fd.id_driver as varchar) as driver_id,
+md.date_active_since,
+-- date_trunc('day', md.date_active_since) as day_conv,
+fd.first_tour,
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1) as days_till_first_tour,
+fd.tours,
+avg(d.rating) as avg_driver_rating,
+d.rating_count
+
+from daily.mytaxi_drivers md
+
+left join dm.fact_driver fd on md.id_company = fd.id_company
+left join dm.dim_driver d on md.id = d.id
+left join dm.fact_booking_request br on d.id = br.id_driver
+left join dm.dim_booking_status bs on br.id_booking_status = bs.id
+
+where md.date_active_since >= {{ start }}
+and md.date_active_since <= {{ end }}
+
+and md.id_office = 148
+and d.is_phv = true
+group by
+cast(fd.id_driver as varchar),
+md.date_active_since,
+-- date_trunc('day', md.date_active_since),
+fd.first_tour,
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1),
+fd.tours,
+d.rating_count
+order by md.date_active_since) sub
+
+group by date_trunc('day', date_active_since)
+order by date_active_since
+
+--------------------------------------------------------
+
+-- new_ob_tours_date_active_since_and_onboards_weekly --
+
+select
+-- date_trunc('week', date_active_since) as date_active_since,
+week(date_active_since) as week_active_since,
+-- count(driver_id) as weekly_onboards,
+concat(CAST(count(driver_id) AS VARCHAR), ' onboards') as weekly_onboards,
+sum(tours) as no_of_tours
+
+from
+
+(select
+cast(fd.id_driver as varchar) as driver_id,
+md.date_active_since,
+-- date_trunc('day', md.date_active_since) as day_conv,
+fd.first_tour,
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1) as days_till_first_tour,
+fd.tours,
+avg(d.rating) as avg_driver_rating,
+d.rating_count
+
+from daily.mytaxi_drivers md
+
+left join dm.fact_driver fd on md.id_company = fd.id_company
+left join dm.dim_driver d on md.id = d.id
+left join dm.fact_booking_request br on d.id = br.id_driver
+left join dm.dim_booking_status bs on br.id_booking_status = bs.id
+
+where md.date_active_since >= {{ start }}
+and md.date_active_since <= {{ end }}
+
+and md.id_office = 148
+and d.is_phv = true
+group by
+cast(fd.id_driver as varchar),
+md.date_active_since,
+-- date_trunc('day', md.date_active_since),
+fd.first_tour,
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1),
+fd.tours,
+d.rating_count
+order by md.date_active_since) sub
+
+group by
+-- date_trunc('week', date_active_since),
+week(date_active_since)
+
+order by week_active_since
+
+--------------------------------------------------------
+
+-- canc_count_new_ob_>1_cancellation --
+
+select count(bs.status)
+from dm.dim_driver d
+left join dm.fact_driver fd on d.id_company = fd.id_company
+left join dm.fact_booking_request br on d.id = br.id_driver
+left join dm.dim_booking_status bs on br.id_booking_status = bs.id
+left join daily.mytaxi_drivers md on d.id = md.id
+where md.date_active_since >= {{ start }}
+and md.date_active_since <= {{ end }}
+and bs.status = 'DRIVER_ABORT'
+and md.id_office = 148
+and d.is_phv = true
+
+--------------------------------------------------------
+
+-- new_ob_>1_cancellation --
+
+select
+distinct(cast(br.id_driver as varchar)) as driver_id,
+md.date_active_since,
+fd.tours,
+count(*) driver_cancels,
+avg(d.rating) as avg_driver_rating,
+d.rating_count
+
+from dm.dim_driver d
+left join dm.fact_driver fd on d.id_company = fd.id_company
+left join dm.fact_booking_request br on d.id = br.id_driver
+left join dm.dim_booking_status bs on br.id_booking_status = bs.id
+left join daily.mytaxi_drivers md on d.id = md.id
+where md.date_active_since >= {{ start }}
+and md.date_active_since <= {{ end }}
+and bs.status = 'DRIVER_ABORT'
+and md.id_office = 148
+and d.is_phv = true
+group by 1, 2, 3, 6
+order by md.date_active_since
+
+--------------------------------------------------------
+
+-- new_ob_count_in_person --
+
+select count(distinct(d.id)) as new_onboards
+
+from daily.mytaxi_drivers md
+
+left join dm.fact_driver fd on md.id_company = fd.id_company
+left join dm.dim_driver d on md.id = d.id
+left join dm.fact_booking_request br on d.id = br.id_driver
+left join dm.dim_booking_status bs on br.id_booking_status = bs.id
+
+where md.date_active_since >= {{ start }}
+and md.date_active_since <= {{ end }}
+and (DATE_FORMAT(md.date_active_since, '%a') = 'Mon' or DATE_FORMAT(md.date_active_since, '%a') = 'Wed' or DATE_FORMAT(md.date_active_since, '%a') = 'Fri')
+
+and md.id_office = 148
+and d.is_phv = true
+
+--------------------------------------------------------
+
+-- new_ob_ride_count_in_person --
+
+select
+sum(tours) as no_of_tours
+
+from
+
+(select
+cast(fd.id_driver as varchar) as driver_id,
+md.date_active_since,
+-- date_trunc('day', md.date_active_since) as day_conv,
+fd.first_tour,
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1) as days_till_first_tour,
+fd.tours,
+avg(d.rating) as avg_driver_rating,
+d.rating_count
+
+from daily.mytaxi_drivers md
+
+left join dm.fact_driver fd on md.id_company = fd.id_company
+left join dm.dim_driver d on md.id = d.id
+left join dm.fact_booking_request br on d.id = br.id_driver
+left join dm.dim_booking_status bs on br.id_booking_status = bs.id
+
+where md.date_active_since >= {{ start }}
+and md.date_active_since <= {{ end }}
+
+and md.id_office = 148
+and d.is_phv = true
+group by
+cast(fd.id_driver as varchar),
+md.date_active_since,
+-- date_trunc('day', md.date_active_since),
+fd.first_tour,
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1),
+fd.tours,
+d.rating_count
+order by md.date_active_since) sub
+
+
+where (DATE_FORMAT(date_active_since, '%a') = 'Mon' or DATE_FORMAT(date_active_since, '%a') = 'Wed' or DATE_FORMAT(date_active_since, '%a') = 'Fri')
+
+--------------------------------------------------------
+
+-- new_ob_avg_rating_in_person --
+
+select
+-- date_trunc('day', date_active_since) as date_active_since,
+avg(avg_driver_rating)
+
+from
+
+(select
+cast(fd.id_driver as varchar) as driver_id,
+md.date_active_since,
+-- date_trunc('day', md.date_active_since) as day_conv,
+fd.first_tour,
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1) as days_till_first_tour,
+fd.tours,
+avg(d.rating) as avg_driver_rating,
+d.rating_count
+
+from daily.mytaxi_drivers md
+
+left join dm.fact_driver fd on md.id_company = fd.id_company
+left join dm.dim_driver d on md.id = d.id
+left join dm.fact_booking_request br on d.id = br.id_driver
+left join dm.dim_booking_status bs on br.id_booking_status = bs.id
+
+where md.date_active_since >= {{ start }}
+and md.date_active_since <= {{ end }}
+
+and md.id_office = 148
+and d.is_phv = true
+group by
+cast(fd.id_driver as varchar),
+md.date_active_since,
+-- date_trunc('day', md.date_active_since),
+fd.first_tour,
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1),
+fd.tours,
+d.rating_count
+order by md.date_active_since) sub
+
+
+where (DATE_FORMAT(date_active_since, '%a') = 'Mon' or DATE_FORMAT(date_active_since, '%a') = 'Wed' or DATE_FORMAT(date_active_since, '%a') = 'Fri')
+
+
+-- date_trunc('day', date_active_since),
+
+-- order by date_active_since
+
+--------------------------------------------------------
+
+-- new_ob_tours_date_active_since_in_person --
+
+select
+date_trunc('day', date_active_since) as date_active_since,
+sum(tours) as no_of_tours
+
+from
+
+(select
+cast(fd.id_driver as varchar) as driver_id,
+md.date_active_since,
+-- date_trunc('day', md.date_active_since) as day_conv,
+fd.first_tour,
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1) as days_till_first_tour,
+fd.tours,
+avg(d.rating) as avg_driver_rating,
+d.rating_count
+
+from daily.mytaxi_drivers md
+
+left join dm.fact_driver fd on md.id_company = fd.id_company
+left join dm.dim_driver d on md.id = d.id
+left join dm.fact_booking_request br on d.id = br.id_driver
+left join dm.dim_booking_status bs on br.id_booking_status = bs.id
+
+where md.date_active_since >= {{ start }}
+and md.date_active_since <= {{ end }}
+
+and md.id_office = 148
+and d.is_phv = true
+group by
+cast(fd.id_driver as varchar),
+md.date_active_since,
+-- date_trunc('day', md.date_active_since),
+fd.first_tour,
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1),
+fd.tours,
+d.rating_count
+order by md.date_active_since) sub
+
+
+where (DATE_FORMAT(date_active_since, '%a') = 'Mon' or DATE_FORMAT(date_active_since, '%a') = 'Wed' or DATE_FORMAT(date_active_since, '%a') = 'Fri')
+
+group by date_trunc('day', date_active_since)
+order by date_active_since
+
+--------------------------------------------------------
+
+-- canc_count_new_ob_>1_cancellation_in_person --
+
+select count(bs.status)
+from dm.dim_driver d
+left join dm.fact_driver fd on d.id_company = fd.id_company
+left join dm.fact_booking_request br on d.id = br.id_driver
+left join dm.dim_booking_status bs on br.id_booking_status = bs.id
+left join daily.mytaxi_drivers md on d.id = md.id
+where md.date_active_since >= {{ start }}
+and md.date_active_since <= {{ end }}
+and (DATE_FORMAT(md.date_active_since, '%a') = 'Mon' or DATE_FORMAT(md.date_active_since, '%a') = 'Wed' or DATE_FORMAT(md.date_active_since, '%a') = 'Fri')
+and bs.status = 'DRIVER_ABORT'
+and md.id_office = 148
+and d.is_phv = true
+
+--------------------------------------------------------
+
+-- canc_ratio_in_person --
+
+select
+
+(select count(bs.status)
+from dm.dim_driver d
+left join dm.fact_driver fd on d.id_company = fd.id_company
+left join dm.fact_booking_request br on d.id = br.id_driver
+left join dm.dim_booking_status bs on br.id_booking_status = bs.id
+left join daily.mytaxi_drivers md on d.id = md.id
+where md.date_active_since >= {{ start }}
+and md.date_active_since <= {{ end }}
+and (DATE_FORMAT(md.date_active_since, '%a') = 'Mon' or DATE_FORMAT(md.date_active_since, '%a') = 'Wed' or DATE_FORMAT(md.date_active_since, '%a') = 'Fri')
+and bs.status = 'DRIVER_ABORT'
+and md.id_office = 148
+and d.is_phv = true) * 1.00 /
+
+(select
+sum(tours) as no_of_tours
+
+from
+
+(select
+cast(fd.id_driver as varchar) as driver_id,
+md.date_active_since,
+-- date_trunc('day', md.date_active_since) as day_conv,
+fd.first_tour,
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1) as days_till_first_tour,
+fd.tours,
+avg(d.rating) as avg_driver_rating,
+d.rating_count
+
+from daily.mytaxi_drivers md
+
+left join dm.fact_driver fd on md.id_company = fd.id_company
+left join dm.dim_driver d on md.id = d.id
+left join dm.fact_booking_request br on d.id = br.id_driver
+left join dm.dim_booking_status bs on br.id_booking_status = bs.id
+
+where md.date_active_since >= {{ start }}
+and md.date_active_since <= {{ end }}
+
+and md.id_office = 148
+and d.is_phv = true
+group by
+cast(fd.id_driver as varchar),
+md.date_active_since,
+-- date_trunc('day', md.date_active_since),
+fd.first_tour,
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1),
+fd.tours,
+d.rating_count
+order by md.date_active_since) sub
+
+
+where (DATE_FORMAT(date_active_since, '%a') = 'Mon' or DATE_FORMAT(date_active_since, '%a') = 'Wed' or DATE_FORMAT(date_active_since, '%a') = 'Fri')) * 1.00
+
+--------------------------------------------------------
+
+-- new_ob_avg_days_till_first_tour_in_person --
+
+Select
+avg(cast(days_till_first_tour as bigint)) as avg_days_till_first_tour
+
+from
+
+(select
+cast(fd.id_driver as varchar) as driver_id,
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1) as days_till_first_tour
+
+
+from daily.mytaxi_drivers md
+
+left join dm.fact_driver fd on md.id_company = fd.id_company
+left join dm.dim_driver d on md.id = d.id
+left join dm.fact_booking_request br on d.id = br.id_driver
+left join dm.dim_booking_status bs on br.id_booking_status = bs.id
+
+where md.date_active_since >= {{ start }}
+and md.date_active_since <= {{ end }}
+and (DATE_FORMAT(md.date_active_since, '%a') = 'Mon' or DATE_FORMAT(md.date_active_since, '%a') = 'Wed' or DATE_FORMAT(md.date_active_since, '%a') = 'Fri')
+and md.id_office = 148
+and d.is_phv = true
+group by
+cast(fd.id_driver as varchar),
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1)) sub
+
+---- End of Driver Centre Metrics (Whitechapel) ----
+
+--------------------------------------------------------
+--------------------------------------------------------
+
+Driver Centre Metrics EV vs Non EV (Whitechapel)
+
+-- new_ob_count_ev --
+
+select count(distinct(d.id)) as new_onboards
+
+from daily.mytaxi_drivers md
+
+left join dm.fact_driver fd on md.id_company = fd.id_company
+left join dm.dim_driver d on md.id = d.id
+left join dm.fact_booking_request br on d.id = br.id_driver
+left join dm.dim_booking_status bs on br.id_booking_status = bs.id
+left join dm.dim_car dc on md.id_company = dc.id_company
+
+-- where md.date_active_since BETWEEN timestamp '2021-04-12 09:00:00.000' AND CURRENT_TIMESTAMP
+-- [[where md.date_active_since>={{md.date_active_since}}]]
+
+where md.date_active_since >= {{ start }}
+and md.date_active_since <= {{ end }}
+
+and md.id_office = 148
+and d.is_phv = true
+and dc.eco_taxi = true
+
+--------------------------------------------------------
+
+-- new_ob_ride_count_ev --
+
+select
+sum(tours)
+
+from
+
+(select
+cast(fd.id_driver as varchar) as driver_id,
+md.date_active_since,
+-- date_trunc('day', md.date_active_since) as day_conv,
+fd.first_tour,
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1) as days_till_first_tour,
+fd.tours,
+avg(d.rating) as avg_driver_rating,
+d.rating_count
+
+from daily.mytaxi_drivers md
+
+left join dm.fact_driver fd on md.id_company = fd.id_company
+left join dm.dim_driver d on md.id = d.id
+left join dm.fact_booking_request br on d.id = br.id_driver
+left join dm.dim_booking_status bs on br.id_booking_status = bs.id
+left join dm.dim_car dc on md.id_company = dc.id_company
+
+where md.date_active_since >= {{ start }}
+and md.date_active_since <= {{ end }}
+
+and md.id_office = 148
+and d.is_phv = true
+and dc.eco_taxi = true
+group by
+cast(fd.id_driver as varchar),
+md.date_active_since,
+-- date_trunc('day', md.date_active_since),
+fd.first_tour,
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1),
+fd.tours,
+d.rating_count
+order by md.date_active_since) sub
+
+--------------------------------------------------------
+
+-- new_ob_avg_days_till_first_tour_ev --
+
+Select
+avg(cast(days_till_first_tour as bigint)) as avg_days_till_first_tour
+
+from
+
+(select
+cast(fd.id_driver as varchar) as driver_id,
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1) as days_till_first_tour
+
+
+from daily.mytaxi_drivers md
+
+left join dm.fact_driver fd on md.id_company = fd.id_company
+left join dm.dim_driver d on md.id = d.id
+left join dm.fact_booking_request br on d.id = br.id_driver
+left join dm.dim_booking_status bs on br.id_booking_status = bs.id
+left join dm.dim_car dc on md.id_company = dc.id_company
+
+where md.date_active_since >= {{ start }}
+and md.date_active_since <= {{ end }}
+
+and md.id_office = 148
+and d.is_phv = true
+and dc.eco_taxi = true
+group by
+cast(fd.id_driver as varchar),
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1)) sub
+
+--------------------------------------------------------
+
+-- new_ob_tours_date_active_since_and_onboards_weekly_ev --
+
+select
+-- date_trunc('week', date_active_since) as date_active_since,
+week(date_active_since) as week_active_since,
+-- count(driver_id) as weekly_onboards,
+concat(CAST(count(driver_id) AS VARCHAR), ' onboards') as weekly_onboards,
+sum(tours) as no_of_tours
+
+from
+
+(select
+cast(fd.id_driver as varchar) as driver_id,
+md.date_active_since,
+-- date_trunc('day', md.date_active_since) as day_conv,
+fd.first_tour,
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1) as days_till_first_tour,
+fd.tours,
+avg(d.rating) as avg_driver_rating,
+d.rating_count
+
+from daily.mytaxi_drivers md
+
+left join dm.fact_driver fd on md.id_company = fd.id_company
+left join dm.dim_driver d on md.id = d.id
+left join dm.fact_booking_request br on d.id = br.id_driver
+left join dm.dim_booking_status bs on br.id_booking_status = bs.id
+left join dm.dim_car dc on md.id_company = dc.id_company
+
+where md.date_active_since >= {{ start }}
+and md.date_active_since <= {{ end }}
+
+and md.id_office = 148
+and d.is_phv = true
+and dc.eco_taxi = true
+group by
+cast(fd.id_driver as varchar),
+md.date_active_since,
+-- date_trunc('day', md.date_active_since),
+fd.first_tour,
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1),
+fd.tours,
+d.rating_count
+order by md.date_active_since) sub
+
+group by
+-- date_trunc('week', date_active_since),
+week(date_active_since)
+
+order by week_active_since
+
+--------------------------------------------------------
+
+-- canc_count_new_ob_>1_cancellation_ev --
+
+select count(bs.status)
+from dm.dim_driver d
+left join dm.fact_driver fd on d.id_company = fd.id_company
+left join dm.fact_booking_request br on d.id = br.id_driver
+left join dm.dim_booking_status bs on br.id_booking_status = bs.id
+left join daily.mytaxi_drivers md on d.id = md.id
+left join dm.dim_car dc on md.id_company = dc.id_company
+where md.date_active_since >= {{ start }}
+and md.date_active_since <= {{ end }}
+and bs.status = 'DRIVER_ABORT'
+and md.id_office = 148
+and d.is_phv = true
+and dc.eco_taxi = true
+
+--------------------------------------------------------
+
+-- canc_ratio_ev --
+
+select
+
+(select count(bs.status)
+from dm.dim_driver d
+left join dm.fact_driver fd on d.id_company = fd.id_company
+left join dm.fact_booking_request br on d.id = br.id_driver
+left join dm.dim_booking_status bs on br.id_booking_status = bs.id
+left join daily.mytaxi_drivers md on d.id = md.id
+left join dm.dim_car dc on md.id_company = dc.id_company
+where md.date_active_since >= {{ start }}
+and md.date_active_since <= {{ end }}
+and bs.status = 'DRIVER_ABORT'
+and md.id_office = 148
+and d.is_phv = true
+and dc.eco_taxi = true ) * 1.00 /
+
+(select
+sum(tours)
+
+from
+
+(select
+cast(fd.id_driver as varchar) as driver_id,
+md.date_active_since,
+-- date_trunc('day', md.date_active_since) as day_conv,
+fd.first_tour,
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1) as days_till_first_tour,
+fd.tours,
+avg(d.rating) as avg_driver_rating,
+d.rating_count
+
+from daily.mytaxi_drivers md
+
+left join dm.fact_driver fd on md.id_company = fd.id_company
+left join dm.dim_driver d on md.id = d.id
+left join dm.fact_booking_request br on d.id = br.id_driver
+left join dm.dim_booking_status bs on br.id_booking_status = bs.id
+left join dm.dim_car dc on md.id_company = dc.id_company
+
+where md.date_active_since >= {{ start }}
+and md.date_active_since <= {{ end }}
+
+and md.id_office = 148
+and d.is_phv = true
+and dc.eco_taxi = true
+group by
+cast(fd.id_driver as varchar),
+md.date_active_since,
+-- date_trunc('day', md.date_active_since),
+fd.first_tour,
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1),
+fd.tours,
+d.rating_count
+order by md.date_active_since) sub) * 1.00
+
+--------------------------------------------------------
+
+-- new_ob_avg_rating_ev --
+
+select
+-- date_trunc('day', date_active_since) as date_active_since,
+avg(avg_driver_rating)
+
+from
+
+(select
+cast(fd.id_driver as varchar) as driver_id,
+md.date_active_since,
+-- date_trunc('day', md.date_active_since) as day_conv,
+fd.first_tour,
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1) as days_till_first_tour,
+fd.tours,
+avg(d.rating) as avg_driver_rating,
+d.rating_count
+
+from daily.mytaxi_drivers md
+
+left join dm.fact_driver fd on md.id_company = fd.id_company
+left join dm.dim_driver d on md.id = d.id
+left join dm.fact_booking_request br on d.id = br.id_driver
+left join dm.dim_booking_status bs on br.id_booking_status = bs.id
+left join dm.dim_car dc on md.id_company = dc.id_company
+
+where md.date_active_since >= {{ start }}
+and md.date_active_since <= {{ end }}
+
+and md.id_office = 148
+and d.is_phv = true
+and dc.eco_taxi = true
+group by
+cast(fd.id_driver as varchar),
+md.date_active_since,
+-- date_trunc('day', md.date_active_since),
+fd.first_tour,
+substring(cast(fd.first_tour - md.date_active_since as varchar),1,1),
+fd.tours,
+d.rating_count
+order by md.date_active_since) sub
+
+
+
+
+-- date_trunc('day', date_active_since),
+
+-- order by date_active_since
+
+---- End of Driver Centre Metrics EV vs Non EV (Whitechapel) ----
+      <!--code Tag ends here -->
+              </code>
+           </pre>
+
+
+</div>
+
+
+  <script src="script.js"></script>
+  <script type="text/javascript" src="particles.min.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+
+</body>
+</html>

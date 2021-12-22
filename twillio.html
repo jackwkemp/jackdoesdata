@@ -37,41 +37,41 @@
 <p>I created a test environment as shown below:</p>
 <p>The Flask web application connects directly to the Twilio API and allows users with the correct authorisation to send a message to any phone number.</p>
 
-  <pre>
+<pre>
 <!--code Tag starts here -->
-  <code>
+<code>
 
-    from twilio.rest import Client
-    from flask import Flask, render_template, request
+from twilio.rest import Client
+from flask import Flask, render_template, request
 
-    app = Flask(__name__)
+app = Flask(__name__)
 
-    account_sid = 'INSERT ACCOUNT SID HERE'
-    auth_token = 'INSERT AUTH TOKEN HERE'
-    client = Client(account_sid, auth_token)
-
-
-    @app.route('/')
-    def index():
-        return render_template('index.html')
+account_sid = 'INSERT ACCOUNT SID HERE'
+auth_token = 'INSERT AUTH TOKEN HERE'
+client = Client(account_sid, auth_token)
 
 
-    @app.route('/send', methods=['POST'])
-    def send():
-        message = client.messages.create(
-            from_='INSERT TWILIO PHONE NUMBER HERE',
-            body=request.form['sms'],
-            to=request.form['number']
-        )
-
-        return message.sid
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 
-    if __name__ == '__main__':
-        app.run(debug=True)
-            <!--code Tag ends here -->
-                    </code>
-                 </pre>
+@app.route('/send', methods=['POST'])
+def send():
+    message = client.messages.create(
+        from_='INSERT TWILIO PHONE NUMBER HERE',
+        body=request.form['sms'],
+        to=request.form['number']
+    )
+
+    return message.sid
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
+        <!--code Tag ends here -->
+                </code>
+             </pre>
 
 
 </div>
