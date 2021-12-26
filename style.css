@@ -17,9 +17,6 @@ body {
   position: fixed;
   z-index: 100;
   box-shadow: 0px 0.25px 12px 0px rgba(0,0,0,0.3);
-
-
-
 }
 
 .fa-home{
@@ -60,17 +57,18 @@ body {
 a {
   text-decoration: none;
   color: inherit;
-
 }
 
-h2, p, code, pre {
-  /* margin-left: 10%;
-  margin-right: 10%; */
-}
 
 pre {
   overflow-x: scroll;
   /* background-color: #f5f5f5; */
+}
+
+img {
+  width: 100%;
+  overflow-x: auto;
+  display: flex;
 }
 
 /* Container for flexboxes */
