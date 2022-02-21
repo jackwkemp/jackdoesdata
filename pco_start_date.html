@@ -11,23 +11,28 @@
   <body>
 
     <div class="navbar">
-  <a href="index.html">home</a>
-  <a href="about.html">about</a>
-  <a href="https://www.linkedin.com/in/jackwkemp/" target="_blank" class="fa fa-linkedin"></a>
-  <a href="https://github.com/jackwkemp" target="_blank" class="fa fa-github"></a>
-  <a href="mailto:jackwilliamkemp@gmail.com" class="fa fa-google"></a>
-  <a class="fa fa-whatsapp"></a>
+      <a href="index.html" class="fa fa-home"></a>
+      <a href="about.html" class="fa fa-info"></a>
+      <a href="https://www.linkedin.com/in/jackwkemp/" target="_blank" class="fa fa-linkedin"></a>
+      <a href="https://github.com/jackwkemp" target="_blank" class="fa fa-github"></a>
+      <a href="mailto:jackwilliamkemp@gmail.com" class="fa fa-google"></a>
+      <a href="tel:+447401355871" class="fa fa-whatsapp"></a>
 
 </div>
 
-  <!-- <h2>Responsive Column Cards</h2> -->
+<div class="non_code">
+
+
+  <br>
   <br>
   <br>
   <br>
   <h2>PCO Start Date Generator</h2>
 
-  <h2>A piece of code that predicts the start date of a document </h2>
-
+  <h3>Aim:</h3>
+  <p>To predict the start date of a document based off the end date.</p>
+<br>
+  <h3>Context:</h3>
   <p>A Private Hire Driver's Licence (PCO) is a mandetory document that is required for drivers to hold if they wish to partner with companies like Uber, Bolt and Ola in London, UK. </p>
 
   <p>At my previous employer (a competitor of the above mentioned companies) we found an opportunity where we could save time autocompleting the start date of a PCO if we already knew the expiry date.</p>
@@ -35,19 +40,17 @@
   <p>By getting the driver to upload the document and input the expiry date only, we were able to predict the start date of the document automatically with the code below.</p>
 
   <p>The introducton to this script meant we could remove the start date requirement for drivers when they were uploading documents, save time for document validation agents and increase accuarcy when auditing documents internally.</p>
+<br>
+<h3>Example:</h3>
 
   <p>In this case, the example expiry date is '13/08/2022'.</p>
 
   <p>The code takes three years away from 2022, then adds one day to 13.</p>
 
   <p>The result = '14/08/2019'</p>
-
-  <h2>Code:</h2>
-
-  <pre>
-<!--code Tag starts here -->
-  <code>
-
+<br>
+  <h3>Code:</h3>
+  <pre><code>
 import datetime
 
 expiry_date = '13/08/2022'
@@ -74,9 +77,7 @@ and deducted three from the 'year'")
                     </code>
                  </pre>
                  <h2>Result</h2>
-                 <pre>
-                 <!--code Tag starts here -->
-                 <code>
+                 <pre><code>
 Original expiry date: 13/08/2022
 Predicted start date: 14/08/2019
 The predicted start date has added one day to the 'day'
@@ -85,7 +86,7 @@ and deducted three from the 'year'
 </code>
 </pre>
 
-
+</div>
 
   <script src="script.js"></script>
   <script type="text/javascript" src="particles.min.js"></script>

@@ -30,14 +30,120 @@
 
 <p>A shallow dive into the world of Blockchain technology.</p>
 
-<p>Below is an example of how blockchain technology works (in a basic sense). Simply change any part of the <span class="redText" style="color:#a52a2a; font-family: Courier New;">transaction 'block'</span> and you will see a different hash appear in the result.</p>
+<p>Below is an example of how blockchain technology works (in a basic sense). I have altered a section of the third block by changing the name from 'Jack' to 'Sandy'.
+Hopefully, you will be able to see the difference!
 <br>
 <br>
 
 
-<iframe frameborder="0" width="100%" height="500px" src="https://replit.com/@JackKemp3/blockchain?lite=true"></iframe>
+
 <br>
 <br>
+
+<h2>Code:</h2>
+<pre>
+<!--code Tag starts here -->
+<code>
+  import hashlib
+
+class Block():
+    def __init__(self, previous_hash, transaction):
+        self.transactions = transaction
+        self.previous_hash = previous_hash
+        string_to_hash = "".join(transaction) + previous_hash
+        self.block_hash = hashlib.sha256(string_to_hash.encode()).hexdigest()
+
+<!--code Tag ends here -->
+</code>
+</pre>
+
+<pre>
+<!--code Tag starts here -->
+<code>
+  from block import Block
+
+  blockchain = []
+
+  genesis_block = Block("Here we go...", ["Jack sent 5 BTC to Mike"])
+
+  second_block = Block(genesis_block.block_hash, ["Mike sent 10 BTC to Jack"])
+
+  third_block = Block(second_block.block_hash, ["<span class="redText" style="color:#a52a2a; font-family: Courier New;">Jack</span> sent 5 BTC to Mike"])
+
+  print("Block hash: genesis block:")
+  print(genesis_block.block_hash)
+
+  print("Block hash: second block:")
+  print(second_block.block_hash)
+
+  print("Block hash: third block:")
+  print(third_block.block_hash)
+
+<!--code Tag ends here -->
+</code>
+</pre>
+
+<p>Result:</p>
+
+<pre>
+<!--code Tag starts here -->
+<code>
+  Block hash: genesis block:
+  9b51063a07e0a32727219efa8ad40228722f542f830636cbbfa01d4f47d684af
+  Block hash: second block:
+  a4acb1051a6173cfcc828a748dd737e8b715a3e6237bdeb81326d3ef5ba52f68
+  Block hash: third block:
+  <span class="redText" style="color:#a52a2a; font-family: Courier New;">dbdccfcf6b43be26666ab3e0084a883a5a564461c335429ca4df1452599074f4</span>
+
+<!--code Tag ends here -->
+</code>
+</pre>
+
+<p>As you can see, the resulting third block hash is completely different compared to above.</p>
+
+<pre>
+<!--code Tag starts here -->
+<code>
+  from block import Block
+
+  blockchain = []
+
+  genesis_block = Block("Here we go...", ["Jack sent 5 BTC to Mike"])
+
+  second_block = Block(genesis_block.block_hash, ["Mike sent 10 BTC to Jack"])
+
+  third_block = Block(second_block.block_hash, ["<span class="redText" style="color:#a52a2a; font-family: Courier New;">Sandy</span> sent 5 BTC to Mike"])
+
+  print("Block hash: genesis block:")
+  print(genesis_block.block_hash)
+
+  print("Block hash: second block:")
+  print(second_block.block_hash)
+
+  print("Block hash: third block:")
+  print(third_block.block_hash)
+
+<!--code Tag ends here -->
+</code>
+</pre>
+
+<p>Result:</p>
+
+<pre>
+<!--code Tag starts here -->
+<code>
+  Block hash: genesis block:
+  9b51063a07e0a32727219efa8ad40228722f542f830636cbbfa01d4f47d684af
+  Block hash: second block:
+  a4acb1051a6173cfcc828a748dd737e8b715a3e6237bdeb81326d3ef5ba52f68
+  Block hash: third block:
+  <span class="redText" style="color:#a52a2a; font-family: Courier New;">844cb1bf868d26d4ce30aecc9e5fdbff042dadf5ae668d136c452c86c23267fe</span>
+
+
+<!--code Tag ends here -->
+</code>
+</pre>
+
 
 </div>
 
