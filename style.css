@@ -9,6 +9,7 @@ body {
   margin-right: 10%; */
 }
 
+
 .navbar {
   width: 100%;
   /* width: 80%; */
@@ -17,6 +18,7 @@ body {
   position: fixed;
   z-index: 100;
   box-shadow: 0px 0.25px 12px 0px rgba(0,0,0,0.3);
+
 }
 
 .fa-home{
@@ -29,15 +31,15 @@ body {
   color: white;
   text-decoration: none;
   font-size: 17px;
-  width: 13.3%; /* Four links of equal widths */
-  /* width: 16.5%; */
+  /* width: 13.3%; /* Four links of equal widths */
+  width: 20%;
   text-align: center;
   color: black;
 }
 
 .navbar a:hover {
-  background: #f1f1f1;
-  color: black;
+  /* background: #f1f1f1; */
+  color: pink;
 
 }
 
@@ -70,8 +72,6 @@ pre {
   overflow-x: auto;
   display: flex;
 } */
-
-
 
 /* Container for flexboxes */
 .row {
